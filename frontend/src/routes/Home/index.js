@@ -17,11 +17,11 @@ export default function Home() {
       loading: false,
       categories: response.data,
     });
+    console.log(categories);
   };
 
   useEffect(() => {
     refreshCategories();
-    console.log(categories);
   }, []);
 
   const viewCategory = (categoryId) => {
@@ -63,9 +63,3 @@ function CategoryCard({ imageLink, title, view }) {
     </Card>
   );
 }
-
-// CategoryCard.propTypes = {
-//   title: PropTypes.tring,
-//   imageLink: PropTypes.string,
-//   view: PropTypes.func,
-// };
