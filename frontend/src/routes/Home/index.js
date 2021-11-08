@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Container, CardGroup, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router';
