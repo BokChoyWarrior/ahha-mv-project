@@ -10,22 +10,18 @@ export default function Home() {
   const [categories, setCategories] = useState({ loading: true, categories: [] });
 
   const refreshCategories = async () => {
-    const response = await axios.get('/products/categories');
+    // const response = await axios.get('/products/categories');
+    const response = await axios.get('/categories');
 
     setCategories({
       loading: false,
-      categories: response.data.map((item) => {
-        return {
-          name: item,
-          imageLink:
-            'https://images.pexels.com/photos/331990/pexels-photo-331990.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-        };
-      }),
+      categories: response.data,
     });
   };
 
   useEffect(() => {
     refreshCategories();
+    console.log(categories);
   }, []);
 
   const viewCategory = (categoryId) => {
@@ -69,7 +65,7 @@ function CategoryCard({ imageLink, title, view }) {
 }
 
 // CategoryCard.propTypes = {
-//   title: PropTypes.string,
+//   title: PropTypes.tring,
 //   imageLink: PropTypes.string,
 //   view: PropTypes.func,
 // };
