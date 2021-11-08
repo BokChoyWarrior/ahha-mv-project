@@ -1,23 +1,57 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
+import {} from './routes';
 import './App.css';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Categories, Home } from './routes';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navbar bg="dark" variant="dark">
+          <Container>
+            <LinkContainer to="/">
+              <Navbar.Brand>Home</Navbar.Brand>
+            </LinkContainer>
+            <Nav className="me-auto">
+              <LinkContainer to="/categories">
+                <Nav.Link>Categories</Nav.Link>
+              </LinkContainer>
+            </Nav>
+          </Container>
+        </Navbar>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          {/* <Route path="/categories/:id">
+            <Category />
+          </Route> */}
+          <Route path="/categories">
+            <Home />
+          </Route>
+          {/* <Route path="/cart">
+            <Cart />
+          </Route> */}
+          <Route path="*">
+            <NoMatch />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  );
+}
+
+function NoMatch() {
+  let location = useLocation();
+
+  return (
+    <div>
+      <h3>
+        No match for <code>{location.pathname}</code>
+      </h3>
     </div>
   );
 }

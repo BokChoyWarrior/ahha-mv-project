@@ -1,0 +1,19 @@
+module.exports = {
+  env: {
+    browser: false,
+    es2021: true,
+  },
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 13,
+    sourceType: 'module',
+  },
+  plugins: ['react'],
+  rules: {
+    'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: false }],
+    'react/prop-types': 'warn',
+  },
+};
