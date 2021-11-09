@@ -30,8 +30,8 @@ export default function Home() {
     return <h1>LOADING!!!</h1>;
   } else {
     return (
-      <Container>
-        <Row xs={1} md={2} className="g-4 my-2 mb-3">
+      <Container className="my-1">
+        <Row xs={1} md={2} className="g-4">
           {categories.categories.map((category) => {
             return (
               <CategoryCard
