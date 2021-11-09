@@ -4,7 +4,7 @@ import {} from './routes';
 import './App.css';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Categories, Home } from './routes';
+import { Categories, Home, Admin } from './routes';
 
 function App() {
   return (
@@ -35,6 +35,9 @@ function App() {
           {/* <Route path="/cart">
             <Cart />
           </Route> */}
+          <Route path="/admin">
+            <Admin />
+          </Route>
           <Route path="*">
             <NoMatch />
           </Route>
