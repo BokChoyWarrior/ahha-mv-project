@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
-import {} from './routes';
+import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import './App.css';
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Home } from './routes';
-import { authUser } from './lib/auth';
+import { Home, Login, Signup } from './routes';
+import { authUser, verifyLocalUser } from './lib/auth';
 
 function App() {
+  const [session, setSession] = useState({ loggedIn: false, userId: 0 });
+
+  const loginToApp = async () => {
+    const authorised = await verifyLocalUser();
+
+    if (authorised) {
+      setSession({ loggedIn: true, userId: authorised.id });
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <div className="App">
       <Router>
@@ -21,7 +33,7 @@ function App() {
                 <Nav.Link>Categories</Nav.Link>
               </LinkContainer>
             </Nav>
-            <UserOptions />
+            <UserOptions session={session} />
           </Container>
         </Navbar>
         <Switch>
@@ -37,6 +49,12 @@ function App() {
           {/* <Route path="/cart">
             <Cart />
           </Route> */}
+          <Route path="/login">
+            <Login loginToApp={loginToApp} />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
           <Route path="*">
             <NoMatch />
           </Route>
@@ -46,40 +64,30 @@ function App() {
   );
 }
 
-function UserOptions() {
-  const [user, setUser] = useState(false);
+function UserOptions({session}) {
 
-  const getCurrentUser = async () => {
-    try {
-      setUser(localStorage.getItem('User'));
-    } catch (e) {
-      console.log(e);
-    }
-
-    // If there's a user set in localStorage, we should make sure the cart also exists!
-    if (user) {
-      const cart = await authUser(user);
-      if (cart) {
-        setUser(cart.id);
-      }
-    }
-  };
-
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
-  if (user) {
+  if (session.loggedIn === true) {
     return (
-      <>UserExists</>
-      // <MyCart />
-      // <LogoutButton />
+      <>
+        <h4>Hello, {session.userId}</h4>
+        <LinkContainer to="/mycart">
+          <Button>My Cart</Button>
+        </LinkContainer>
+        <LinkContainer to="/logout">
+          <Button>Log Out</Button>
+        </LinkContainer>
+      </>
     );
   } else {
     return (
-      <>Not exists</>
-      // <LoginButton />
-      // <SignupButton />
+      <>
+        <LinkContainer to="/login">
+          <Button>Login</Button>
+        </LinkContainer>
+        <LinkContainer to="/signup">
+          <Button>Sign up</Button>
+        </LinkContainer>
+      </>
     );
   }
 }
