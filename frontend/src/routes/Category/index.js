@@ -7,7 +7,6 @@ export default function Category(props) {
   // defined initial useState
   // useState return a variable, and setter or function that changes the viarable
   const [items, setItems] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
 
   const { id } = useParams();
   const history = useHistory();
@@ -25,10 +24,6 @@ export default function Category(props) {
 
   const redirectTo = (path) => {
     history.push(path);
-  };
-
-  const renderAlert = () => {
-    setShowAlert(true);
   };
 
   const updateAddToCartButton = (item) => {
@@ -50,50 +45,12 @@ export default function Category(props) {
   const addToCart = async (item) => {
     const cartId = props.cartId;
 
-    //uncomment when done with other parts
-    // if (!cartId) {
-    //   renderAlert();
-    //   return;
-    // }
-
-    // if (!userId) redirectTo('/login');
+    if (!cartId) redirectTo('/login');
 
     // disables add to cart button and changes button text to inCart
     updateAddToCartButton(item);
 
-    // check if cart item exists
-
-    //actual
-    // const cartItemGetReqest = await axios.get(`/cartItems/${item.id}`)
-    //dummy
-
     const cartItem = await queryCartItemApi(cartId, item);
-    console.log(cartItem);
-
-    // // // query cart model to create a user cart
-
-    // //check if cart already exists
-
-    // const cartGet = await axios.get(`/cart/${1}`);
-
-    // console.log(cartGet.data);
-
-    // // creates a cart
-    // // pass {id: userId} into request body once defined as second parameter
-
-    // //check if cart exists
-    // if (!cartGet.data) {
-    //   //if not create cart and add cart item
-    //   const createCartResponse = await axios.post('/cart');
-    //   const cartData = createCartResponse.data;
-    //   const createCartItemResponse = await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: cartData.id });
-    // } else {
-    //   const cartData = cartGet.data;
-    //   // get cartItem and increcement amount
-    //   const cartItemGetReq = await axios.get(`/cartItems/${item.id}`);
-    //   if (cartItemGetReq.status !== 200) {
-    //   }
-    // }
   };
 
   const selectTitle = () => {
@@ -117,9 +74,8 @@ export default function Category(props) {
   // return list of items in inside of JSX (html) for showing on the browser
   return (
     <Container>
-      <h2 className="display-2">{selectTitle()}</h2>
-      <AlertDismissible show={showAlert} setShow={setShowAlert} />
-      <Row xs={1} md={2} className="g-4 my-4 justify-content-center">
+      <h2 className="display-2 mt-2">{selectTitle()}</h2>
+      <Row xs={1} md={4} className="g-4 my-4 justify-content-center">
         {/* map over the items data pass it into item card */}
         {items.map((item) => {
           return <ItemCard key={item.id} item={item} handleClick={addToCart}></ItemCard>;
@@ -132,14 +88,14 @@ export default function Category(props) {
 function ItemCard(props) {
   return (
     <Col className="align-self-strech">
-      <Card className="text-left">
+      <Card className="h-100">
         <Card.Img
           variant="top"
-          style={{ width: '100%', height: '450px' }}
+          style={{ width: '100%', height: '100%', maxHeight: '300px' }}
           className=" img-thumbnail ratio ratio-4x3"
           src={props.item.imageLink}
         />
-        <Card.Body>
+        <Card.Body className="d-flex flex-column justify-content-between">
           <Card.Title>{props.item.name}</Card.Title>
           <Card.Text className="text-start">{props.item.description}</Card.Text>
           <Card.Text>£{props.item.price}</Card.Text>
@@ -149,21 +105,5 @@ function ItemCard(props) {
         </Card.Body>
       </Card>
     </Col>
-  );
-}
-
-function AlertDismissible({ show, setShow }) {
-  return (
-    <>
-      <Alert show={show} variant="danger">
-        <Alert.Heading>Please Log In to Add Items to Cart</Alert.Heading>
-
-        <div className="d-flex justify-content-end">
-          <Button onClick={() => setShow(false)} variant="outline-success">
-            Close
-          </Button>
-        </div>
-      </Alert>
-    </>
   );
 }
