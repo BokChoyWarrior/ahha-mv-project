@@ -38,7 +38,6 @@ const { sequelize, CartItem, Cart, Item, Category } = require('./database/models
 
 //     item.save();
 //   });
-// const user1 = await Cart.create()
-// await user1.save()
-
+//   const user1 = await Cart.create();
+//   await user1.save();
 // })();
