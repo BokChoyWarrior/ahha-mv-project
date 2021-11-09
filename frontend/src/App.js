@@ -26,14 +26,11 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          {/* <Route path="/categories/:id">
+          <Route exact path="/categories/:id">
             <Category />
-          </Route> */}
+          </Route>
           <Route exact path="/categories">
             <Home />
-          </Route>
-          <Route exact path="/categories/:categoryId">
-            <Category />
           </Route>
 
           {/* <Route path="/cart">
