@@ -37,10 +37,8 @@ const { sequelize, CartItem, Cart, Item, Category } = require('./database/models
 //     });
 
 //     item.save();
-
-//     const _items = await Item.findAll();
-//     console.log(_items);
 //   });
-//   const cats = await Category.findAll();
-//   console.log(cats);
+// const user1 = await Cart.create()
+// await user1.save()
+
 // })();
