@@ -4,31 +4,31 @@ import axios from './axios';
 // userId will actually reference a Cart model
 export async function authUser(userId) {
   try {
-    const response = await axios.get(`/cart/${userId}`);
+    const response = await axios.get(`/carts/${userId}`);
     if (response.status === 200) {
       return response.data;
     } else {
       return false;
     }
   } catch (e) {
-    return false
+    return false;
   }
 }
 
 export function getUserFromLocal() {
-  return localStorage.getItem('user')
+  return localStorage.getItem('user');
 }
 
 export async function verifyLocalUser() {
-  const localUser = getUserFromLocal()
+  const localUser = getUserFromLocal();
 
   if (localUser) {
-    return await authUser(localUser)
+    return await authUser(localUser);
   } else {
-    return false
+    return false;
   }
 }
 
 export function saveUserToLocal(userId) {
-  localStorage.setItem('user', userId)
+  localStorage.setItem('user', userId);
 }

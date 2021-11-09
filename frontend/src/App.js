@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import './App.css';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Home, Login, Signup } from './routes';
-import { authUser, verifyLocalUser } from './lib/auth';
+import { verifyLocalUser } from './lib/auth';
 
 function App() {
   const [session, setSession] = useState({ loggedIn: false, userId: 0 });
@@ -19,6 +19,10 @@ function App() {
       return false;
     }
   };
+
+  useEffect(() => {
+    loginToApp();
+  }, []);
 
   return (
     <div className="App">
@@ -64,8 +68,7 @@ function App() {
   );
 }
 
-function UserOptions({session}) {
-
+function UserOptions({ session }) {
   if (session.loggedIn === true) {
     return (
       <>

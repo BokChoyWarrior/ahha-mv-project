@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
       },
     });
     if (cart) {
-      res.status(200).send(carts);
+      res.status(200).send(cart);
     } else {
       res.status(404).end();
     }
