@@ -4,7 +4,7 @@ import {} from './routes';
 import './App.css';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Categories, Home, Item } from './routes';
+import { Categories, Home, Category } from './routes';
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/categories/:categoryId">
-            <Item />
+            <Category />
           </Route>
 
           {/* <Route path="/cart">
