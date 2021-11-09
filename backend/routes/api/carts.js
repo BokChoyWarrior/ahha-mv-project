@@ -14,12 +14,16 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const carts = await Cart.findOne({
+    const cart = await Cart.findOne({
       where: {
         id: req.params.id,
       },
     });
-    res.status(200).send(carts);
+    if (cart) {
+      res.status(200).send(carts);
+    } else {
+      res.status(404).end();
+    }
   } catch (e) {
     res.status(400).send(e.message);
   }
@@ -27,9 +31,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const carts = await Cart.create(req.body);
+    const cart = await Cart.create(req.body);
 
-    res.status(200).send(carts);
+    res.status(200).send(cart);
   } catch (e) {
     res.status(400).send(e.message);
   }
@@ -37,10 +41,14 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const carts = await Cart.findOne({ where: { id: req.params.id } });
+    const cart = await Cart.findOne({ where: { id: req.params.id } });
 
-    await carts.destroy();
-    res.status(200).send(carts);
+    if (cart) {
+      await cart.destroy();
+      res.status(200).send(cart);
+    } else {
+      res.status(404).end();
+    }
   } catch (e) {
     res.status(400).send(e.message);
   }
@@ -48,10 +56,14 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const carts = await Cart.findOne({ where: { id: req.params.id } });
-    await carts.update(req.body);
+    const cart = await Cart.findOne({ where: { id: req.params.id } });
 
-    res.status(200).send(carts);
+    if (cart) {
+      await cart.update(req.body);
+      res.status(200).send(cart);
+    } else {
+      res.status(404).end();
+    }
   } catch (e) {
     res.status(400).send(e.message);
   }
