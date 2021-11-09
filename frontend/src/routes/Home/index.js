@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Container, CardGroup, Row } from 'react-bootstrap';
+import { Card, Button, Container, Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import axios from '../../lib/axios';
 
@@ -31,7 +31,7 @@ export default function Home() {
   } else {
     return (
       <Container>
-        <Row xs={1} md={4} className="g-4 mt-4">
+        <Row xs={1} md={2} className="g-4 my-2 mb-3">
           {categories.categories.map((category) => {
             return (
               <CategoryCard
@@ -50,14 +50,16 @@ export default function Home() {
 
 function CategoryCard({ imageLink, title, view }) {
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={imageLink} />
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Button variant="primary" onClick={view}>
-          Go to category page
-        </Button>
-      </Card.Body>
-    </Card>
+    <Col>
+      <Card>
+        <Card.Img variant="top" src={imageLink} />
+        <Card.Body>
+          <Card.Title>{title}</Card.Title>
+          <Button variant="primary" onClick={view}>
+            Go to category page
+          </Button>
+        </Card.Body>
+      </Card>
+    </Col>
   );
 }
