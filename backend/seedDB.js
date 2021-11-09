@@ -4,15 +4,28 @@ const { sequelize, CartItem, Cart, Item, Category } = require('./database/models
 
 // ONLY run this if the universe explodes and we need new items
 
+// Migrate 1
 // (async () => {
 //   const items = JSON.parse(readFileSync('./item-data.json', 'utf8'));
 
 //   await sequelize.sync({ force: true });
 
-//   const cat2 = await Category.create({ name: 'Jewellery' });
-//   const cat3 = await Category.create({ name: 'Electronics' });
-//   const cat4 = await Category.create({ name: "Women's Clothing" });
-//   const cat1 = await Category.create({ name: "Men's Clothing" });
+//   const cat2 = await Category.create({
+//     name: 'Jewellery',
+//     imageLink: `https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260`,
+//   });
+//   const cat3 = await Category.create({
+//     name: 'Electronics',
+//     imageLink: `https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260`,
+//   });
+//   const cat4 = await Category.create({
+//     name: "Women's Clothing",
+//     imageLink: `https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260`,
+//   });
+//   const cat1 = await Category.create({
+//     name: "Men's Clothing",
+//     imageLink: `https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260`,
+//   });
 
 //   items.forEach(async (_item) => {
 //     const item = await Item.create({
