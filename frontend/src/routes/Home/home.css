@@ -1,0 +1,7 @@
+.hover-pointer:hover {
+  cursor: pointer;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 0 5px black;
+}
