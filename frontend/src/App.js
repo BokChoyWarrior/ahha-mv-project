@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import {} from './routes';
 import './App.css';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Categories, Home } from './routes';
+import { Home } from './routes';
+import { authUser } from './lib/auth';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
                 <Nav.Link>Categories</Nav.Link>
               </LinkContainer>
             </Nav>
+            <UserOptions />
           </Container>
         </Navbar>
         <Switch>
@@ -42,6 +44,44 @@ function App() {
       </Router>
     </div>
   );
+}
+
+function UserOptions() {
+  const [user, setUser] = useState(false);
+
+  const getCurrentUser = async () => {
+    try {
+      setUser(localStorage.getItem('User'));
+    } catch (e) {
+      console.log(e);
+    }
+
+    // If there's a user set in localStorage, we should make sure the cart also exists!
+    if (user) {
+      const cart = await authUser(user);
+      if (cart) {
+        setUser(cart.id);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  if (user) {
+    return (
+      <>UserExists</>
+      // <MyCart />
+      // <LogoutButton />
+    );
+  } else {
+    return (
+      <>Not exists</>
+      // <LoginButton />
+      // <SignupButton />
+    );
+  }
 }
 
 function NoMatch() {
