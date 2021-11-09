@@ -86,7 +86,7 @@ function TableData({ id, name, category, imageLink, description, price }) {
       <td style={{ overflowWrap: 'break-word' }}>{description}</td>
       <td>£{price}</td>
       <td>
-        <DeleteItem key={id} name={name}></DeleteItem>
+        <DeleteItemButton id={id} name={name}></DeleteItemButton>
       </td>
     </tr>
   );
@@ -96,7 +96,7 @@ function TableData({ id, name, category, imageLink, description, price }) {
 //   //   const response = await axios.get(`/items/${id}`);
 //   await axios.delete(`/items/${id}`);
 // };
-function DeleteItem({ name }) {
+function DeleteItemButton({ name, id }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -104,13 +104,13 @@ function DeleteItem({ name }) {
 
   return (
     <>
-      <FaEraser onClick={handleShow}></FaEraser>
+      <FaEraser style={{ cursor: 'pointer' }} onClick={handleShow}></FaEraser>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Delete</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete {name}</Modal.Body>
+        <Modal.Body>Are you sure you want to delete {name}?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
