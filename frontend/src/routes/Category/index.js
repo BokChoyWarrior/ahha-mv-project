@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Card, Row, Button, Container } from 'react-bootstrap';
+import { Col, Card, Row, Button, Container, Alert } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from '../../lib/axios';
 
 export default function Category(props) {
   // defined initial useState
   // useState return a variable, and setter or function that changes the viarable
+  const [items, setItems] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+
   const { id } = useParams();
   const history = useHistory();
 
-  const [items, setItems] = useState([]);
   // used useEffect to make request to items API from /items
   useEffect(async () => {
     const response = await axios.get('/items');
@@ -21,37 +23,80 @@ export default function Category(props) {
     setItems(cat1);
   }, []);
 
-  const getUserId = () => {
-    return props.userId;
-  };
-
   const redirectTo = (path) => {
     history.push(path);
   };
 
-  const addToCart = async (item) => {
-    // redirects user to login if not logged in
-    const userId = getUserId();
-    // if (!userId) redirectTo('/login');
+  const renderAlert = () => {
+    setShowAlert(true);
+  };
 
-    // disables add to cart button and changes button text to inCart
+  const updateAddToCartButton = (item) => {
     const updatedItems = items.map((itemObjs) => {
       if (itemObjs.id === item.id) return Object.assign({}, { ...item, isInCart: true });
       return itemObjs;
     });
     setItems(updatedItems);
+  };
 
-    // query cart model to create a user cart
+  const queryCartItemApi = async (cartId, item) => {
+    const getCartItem = await axios.get(`/cartItems/${item.id}`);
+    const data = getCartItem.data;
+    if (!Object.values(data).length) {
+      return await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: cartId });
+    }
+  };
 
-    // query cartItem model to create cart item
-    // item needs an association to cart item
-    // const { id, quantity } = item;
-    // const cartItem = { cartId: userId };
-    // const cartItem = axios.post('/cartitem', {});
+  const addToCart = async (item) => {
+    const cartId = props.cartId;
+
+    //uncomment when done with other parts
+    // if (!cartId) {
+    //   renderAlert();
+    //   return;
+    // }
+
+    // if (!userId) redirectTo('/login');
+
+    // disables add to cart button and changes button text to inCart
+    updateAddToCartButton(item);
+
+    // check if cart item exists
+
+    //actual
+    // const cartItemGetReqest = await axios.get(`/cartItems/${item.id}`)
+    //dummy
+
+    const cartItem = await queryCartItemApi(cartId, item);
+    console.log(cartItem);
+
+    // // // query cart model to create a user cart
+
+    // //check if cart already exists
+
+    // const cartGet = await axios.get(`/cart/${1}`);
+
+    // console.log(cartGet.data);
+
+    // // creates a cart
+    // // pass {id: userId} into request body once defined as second parameter
+
+    // //check if cart exists
+    // if (!cartGet.data) {
+    //   //if not create cart and add cart item
+    //   const createCartResponse = await axios.post('/cart');
+    //   const cartData = createCartResponse.data;
+    //   const createCartItemResponse = await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: cartData.id });
+    // } else {
+    //   const cartData = cartGet.data;
+    //   // get cartItem and increcement amount
+    //   const cartItemGetReq = await axios.get(`/cartItems/${item.id}`);
+    //   if (cartItemGetReq.status !== 200) {
+    //   }
+    // }
   };
 
   const selectTitle = () => {
-    console.log(id);
     switch (id) {
       case '1':
         return 'Jewelery Collection';
@@ -72,7 +117,8 @@ export default function Category(props) {
   // return list of items in inside of JSX (html) for showing on the browser
   return (
     <Container>
-      <h2>{selectTitle()}</h2>
+      <h2 className="display-2">{selectTitle()}</h2>
+      <AlertDismissible show={showAlert} setShow={setShowAlert} />
       <Row xs={1} md={2} className="g-4 my-4 justify-content-center">
         {/* map over the items data pass it into item card */}
         {items.map((item) => {
@@ -85,8 +131,8 @@ export default function Category(props) {
 
 function ItemCard(props) {
   return (
-    <Col>
-      <Card>
+    <Col className="align-self-strech">
+      <Card className="text-left">
         <Card.Img
           variant="top"
           style={{ width: '100%', height: '450px' }}
@@ -103,5 +149,21 @@ function ItemCard(props) {
         </Card.Body>
       </Card>
     </Col>
+  );
+}
+
+function AlertDismissible({ show, setShow }) {
+  return (
+    <>
+      <Alert show={show} variant="danger">
+        <Alert.Heading>Please Log In to Add Items to Cart</Alert.Heading>
+
+        <div className="d-flex justify-content-end">
+          <Button onClick={() => setShow(false)} variant="outline-success">
+            Close
+          </Button>
+        </div>
+      </Alert>
+    </>
   );
 }
