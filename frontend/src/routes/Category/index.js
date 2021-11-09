@@ -14,12 +14,22 @@ export default function Category(props) {
   // used useEffect to make request to items API from /items
   useEffect(async () => {
     const response = await axios.get('/items');
-    const cat1 = response.data
+    const cat = response.data
       .filter((item) => item.CategoryId === Number(id))
       .map((item) => {
         return { ...item, isInCart: false };
       });
-    setItems(cat1);
+    if (props.session.loggedIn) {
+      const getCartItems = await axios.get('/cartItems');
+      const userCart = getCartItems.data.filter((item) => item.CartId === props.session.userId);
+      userCart.forEach((cartItem) => {
+        cat.forEach((catItem) => {
+          if (cartItem.id === catItem.id) catItem.isInCart = true;
+          console.log(cartItem);
+        });
+      });
+    }
+    setItems(cat);
   }, []);
 
   const redirectTo = (path) => {
@@ -35,6 +45,7 @@ export default function Category(props) {
   };
 
   const queryCartItemApi = async (userId, item) => {
+    console.log(item);
     const getCartItem = await axios.get(`/cartItems/${item.id}`);
     const data = getCartItem.data;
     if (!Object.values(data).length) {
@@ -47,10 +58,13 @@ export default function Category(props) {
 
     if (!loggedIn) redirectTo('/login');
 
-    // disables add to cart button and changes button text to inCart
-    updateAddToCartButton(item);
+    console.log(userId);
 
     const cartItem = await queryCartItemApi(userId, item);
+    console.log(cartItem);
+
+    // disables add to cart button and changes button text to inCart
+    updateAddToCartButton(item);
   };
 
   const selectTitle = () => {
