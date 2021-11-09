@@ -13,6 +13,14 @@ const categoriesModel = {
       notEmpty: true,
     },
   },
+  imageLink: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      isURL: true,
+    },
+  },
 };
 
 const cartModel = {};
