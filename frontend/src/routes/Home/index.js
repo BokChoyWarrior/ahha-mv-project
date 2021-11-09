@@ -30,13 +30,13 @@ export default function Home() {
     return <h1>LOADING!!!</h1>;
   } else {
     return (
-      <Container className="my-1">
-        <Row xs={1} md={2} className="g-4">
+      <Container className="my-4">
+        <Row xs={1} md={2} lg={4} className="g-4">
           {categories.categories.map((category) => {
             return (
               <CategoryCard
                 key={category.id}
-                title={category.title}
+                name={category.name}
                 imageLink={category.imageLink}
                 view={() => viewCategory(category.id)}
               ></CategoryCard>
@@ -48,15 +48,15 @@ export default function Home() {
   }
 }
 
-function CategoryCard({ imageLink, title, view }) {
+function CategoryCard({ imageLink, name, view }) {
   return (
     <Col>
       <Card>
         <Card.Img variant="top" src={imageLink} />
-        <Card.Body>
-          <Card.Title>{title}</Card.Title>
+        <Card.Body className="d-flex flex-column">
+          <Card.Title>{name}</Card.Title>
           <Button variant="primary" onClick={view}>
-            Go to category page
+            View
           </Button>
         </Card.Body>
       </Card>
