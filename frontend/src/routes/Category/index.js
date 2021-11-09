@@ -34,23 +34,23 @@ export default function Category(props) {
     setItems(updatedItems);
   };
 
-  const queryCartItemApi = async (cartId, item) => {
+  const queryCartItemApi = async (userId, item) => {
     const getCartItem = await axios.get(`/cartItems/${item.id}`);
     const data = getCartItem.data;
     if (!Object.values(data).length) {
-      return await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: cartId });
+      return await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: userId });
     }
   };
 
   const addToCart = async (item) => {
-    const cartId = props.cartId;
+    const { loggedIn, userId } = props.session;
 
-    if (!cartId) redirectTo('/login');
+    if (!loggedIn) redirectTo('/login');
 
     // disables add to cart button and changes button text to inCart
     updateAddToCartButton(item);
 
-    const cartItem = await queryCartItemApi(cartId, item);
+    const cartItem = await queryCartItemApi(userId, item);
   };
 
   const selectTitle = () => {
@@ -73,9 +73,9 @@ export default function Category(props) {
 
   // return list of items in inside of JSX (html) for showing on the browser
   return (
-    <Container>
-      <h2 className="display-2 mt-2">{selectTitle()}</h2>
-      <Row xs={1} md={4} className="g-4 my-4 justify-content-center">
+    <Container className="my-4">
+      <h2 className="display-3 my-2">{selectTitle()}</h2>
+      <Row xs={1} md={4} className="g-4 pt-3 justify-content-center">
         {/* map over the items data pass it into item card */}
         {items.map((item) => {
           return <ItemCard key={item.id} item={item} handleClick={addToCart}></ItemCard>;
@@ -96,7 +96,9 @@ function ItemCard(props) {
           src={props.item.imageLink}
         />
         <Card.Body className="d-flex flex-column justify-content-between">
+          <hr />
           <Card.Title>{props.item.name}</Card.Title>
+          <hr />
           <Card.Text className="text-start">{props.item.description}</Card.Text>
           <Card.Text>£{props.item.price}</Card.Text>
           <Button disabled={props.item.isInCart} onClick={() => props.handleClick(props.item)} variant="primary">
