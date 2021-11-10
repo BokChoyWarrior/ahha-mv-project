@@ -4,7 +4,7 @@ import {} from './routes';
 import './App.css';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Categories, Home } from './routes';
+import { Categories, Home, Category } from './routes';
 
 function App() {
   return (
@@ -26,10 +26,10 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          {/* <Route path="/categories/:id">
+          <Route exact path="/categories/:id">
             <Category />
-          </Route> */}
-          <Route path="/categories">
+          </Route>
+          <Route exact path="/categories">
             <Home />
           </Route>
           {/* <Route path="/carts">
