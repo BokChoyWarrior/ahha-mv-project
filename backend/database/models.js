@@ -77,4 +77,6 @@ Cart.hasMany(CartItem);
 
 CartItem.belongsTo(Cart);
 
+CartItem.hasOne(Item);
+
 module.exports = { sequelize, Item, Category, Cart, CartItem };

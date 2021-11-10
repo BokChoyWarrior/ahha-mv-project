@@ -4,31 +4,35 @@ import axios from './axios';
 // userId will actually reference a Cart model
 export async function authUser(userId) {
   try {
-    const response = await axios.get(`/cart/${userId}`);
+    const response = await axios.get(`/carts/${userId}`);
     if (response.status === 200) {
       return response.data;
     } else {
       return false;
     }
   } catch (e) {
-    return false
+    return false;
   }
 }
 
-export function getUserFromLocal() {
-  return localStorage.getItem('user')
-}
-
-export async function verifyLocalUser() {
-  const localUser = getUserFromLocal()
+// Doesn't need userID, takes it from localstorage
+export async function authLocalUser() {
+  const localUser = getLocalUser();
 
   if (localUser) {
-    return await authUser(localUser)
+    return await authUser(localUser);
   } else {
-    return false
+    return false;
   }
 }
 
-export function saveUserToLocal(userId) {
-  localStorage.setItem('user', userId)
+// Needs a userId and saves to localstorage
+export async function setLocalUser(userId) {
+  localStorage.setItem('user', userId);
 }
+
+export function getLocalUser() {
+  return localStorage.getItem('user');
+}
+
+export async function clearLocalUser() {}
