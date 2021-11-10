@@ -59,7 +59,7 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/categories/:id">
-            <Category />
+            <Category session={session} />
           </Route>
           <Route exact path="/categories">
             <Home />
