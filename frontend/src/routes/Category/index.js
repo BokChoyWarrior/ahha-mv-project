@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Card, Row, Button, Container, Alert } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
+import { addItemToCartReq } from '../../lib/cart';
 import axios from '../../lib/axios';
 
 export default function Category(props) {
@@ -44,15 +45,6 @@ export default function Category(props) {
     setItems(updatedItems);
   };
 
-  const queryCartItemApi = async (userId, item) => {
-    console.log(item);
-    const getCartItem = await axios.get(`/cartItems/${item.id}`);
-    const data = getCartItem.data;
-    if (!Object.values(data).length) {
-      return await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: userId });
-    }
-  };
-
   const addToCart = async (item) => {
     const { loggedIn, userId } = props.session;
 
@@ -60,7 +52,7 @@ export default function Category(props) {
 
     console.log(userId);
 
-    const cartItem = await queryCartItemApi(userId, item);
+    const cartItem = await addItemToCartReq(userId, item);
     console.log(cartItem);
 
     // disables add to cart button and changes button text to inCart
