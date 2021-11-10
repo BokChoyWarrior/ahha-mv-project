@@ -3,12 +3,8 @@ import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 
 import './App.css';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-<<<<<<< HEAD
-import { Categories, Home, Category } from './routes';
-=======
-import { Home, Login, Signup } from './routes';
+import { Home, Login, Signup, Category, Cart } from './routes';
 import { authUser, verifyLocalUser } from './lib/auth';
->>>>>>> user-handling
 
 function App() {
   const [session, setSession] = useState({ loggedIn: false, userId: 0 });
@@ -45,7 +41,7 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/categories/:id">
-            <Category />
+            <Category session={session} />
           </Route>
           <Route exact path="/categories">
             <Home />
@@ -60,6 +56,9 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
+          <Route path="/mycart">
+            <Cart session={session} />
+          </Route>
           <Route path="*">
             <NoMatch />
           </Route>
@@ -69,8 +68,7 @@ function App() {
   );
 }
 
-function UserOptions({session}) {
-
+function UserOptions({ session }) {
   if (session.loggedIn === true) {
     return (
       <>
