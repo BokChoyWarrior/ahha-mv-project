@@ -87,7 +87,7 @@ export default function Category(props) {
 
   // return list of items in inside of JSX (html) for showing on the browser
   return (
-    <Container className="my-4">
+    <Container className="my-4 pb-3">
       <h2 className="display-3 my-2">{selectTitle()}</h2>
       <Row xs={1} md={4} className="g-4 pt-3 justify-content-center">
         {/* map over the items data pass it into item card */}
