@@ -15,12 +15,9 @@ export async function authUser(userId) {
   }
 }
 
-export function getUserFromLocal() {
-  return localStorage.getItem('user');
-}
-
-export async function verifyLocalUser() {
-  const localUser = getUserFromLocal();
+// Doesn't need userID, takes it from localstorage
+export async function authLocalUser() {
+  const localUser = getLocalUser();
 
   if (localUser) {
     return await authUser(localUser);
@@ -29,6 +26,13 @@ export async function verifyLocalUser() {
   }
 }
 
-export function saveUserToLocal(userId) {
+// Needs a userId and saves to localstorage
+export async function setLocalUser(userId) {
   localStorage.setItem('user', userId);
 }
+
+export function getLocalUser() {
+  return localStorage.getItem('user');
+}
+
+export async function clearLocalUser() {}

@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Modal } from 'react-bootstrap';
-import { saveUserToLocal, verifyLocalUser } from '../lib/auth';
 import { useHistory } from 'react-router';
 
-export function Login({loginToApp}) {
-  const history = useHistory()
+export function Login({ loginToApp }) {
+  const history = useHistory();
   const [userId, setUserId] = useState(null);
+  // Modal stuff
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // Logic
   const handleIdChange = (event) => {
     setUserId(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    saveUserToLocal(userId);
 
-    const loggedIn = await loginToApp()
+    const loggedIn = await loginToApp(userId);
 
     if (loggedIn) {
-      history.push('/')
+      history.push('/');
     } else {
-      handleShow()
+      handleShow();
     }
   };
 
