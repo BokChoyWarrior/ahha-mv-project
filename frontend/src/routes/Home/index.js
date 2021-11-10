@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Container, Col, Row } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router';
+import './home.css';
 import axios from '../../lib/axios';
 
 export default function Home() {
@@ -27,19 +28,20 @@ export default function Home() {
   };
 
   if (categories.loading) {
-    return <h1>LOADING!!!</h1>;
+    return <h1>Loading...</h1>;
   } else {
     return (
-      <Container className="my-4">
+      <Container fluid="md">
         <Row xs={1} md={2} lg={4} className="g-4">
           {categories.categories.map((category) => {
             return (
-              <CategoryCard
-                key={category.id}
-                name={category.name}
-                imageLink={category.imageLink}
-                view={() => viewCategory(category.id)}
-              ></CategoryCard>
+              <Col key={category.id} className="mx-auto hover-pointer">
+                <CategoryCard
+                  name={category.name}
+                  imageLink={category.imageLink}
+                  view={() => viewCategory(category.id)}
+                ></CategoryCard>
+              </Col>
             );
           })}
         </Row>
@@ -50,16 +52,14 @@ export default function Home() {
 
 function CategoryCard({ imageLink, name, view }) {
   return (
-    <Col>
-      <Card>
-        <Card.Img variant="top" src={imageLink} />
-        <Card.Body className="d-flex flex-column">
-          <Card.Title>{name}</Card.Title>
-          <Button variant="primary" onClick={view}>
-            View
-          </Button>
-        </Card.Body>
-      </Card>
-    </Col>
+    <Card className="my-auto hover-shadow" style={{ width: '18rem' }} onClick={view}>
+      <Card.Img variant="top" src={imageLink} />
+      <Card.Body>
+        <Card.Title>{name}</Card.Title>
+        <Button variant="primary" onClick={view}>
+          View {name}
+        </Button>
+      </Card.Body>
+    </Card>
   );
 }
