@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-route
 import './App.css';
 import { Navbar, Container, Nav, Button, Col, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Home, Login, Signup, Category } from './routes';
+import { Home, Login, Signup, Category, Cart } from './routes';
 import { authUser, clearLocalUser, getLocalUser } from './lib/auth';
 import LogoutButton from './components/LogoutButton';
 
@@ -72,6 +72,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <Signup loginToApp={loginToApp} />
+          </Route>
+          <Route path="/mycart">
+            <Cart session={session} />
           </Route>
           <Route path="*">
             <NoMatch />
