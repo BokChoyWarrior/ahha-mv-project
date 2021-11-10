@@ -30,6 +30,28 @@ export default function Admin() {
     refreshItems();
   };
 
+  const onSubmitEdit = async (data) => {
+    await axios.put(`/items/${data.id}`, {
+      name: data.name,
+      CategoryId: data.CategoryId,
+      imageLink: data.imageLink,
+      description: data.description,
+      price: data.price,
+    });
+    refreshItems();
+  };
+
+  const onSubmitCreate = async (data) => {
+    await axios.post(`/items`, {
+      name: data.name,
+      CategoryId: data.CategoryId,
+      imageLink: data.imageLink,
+      description: data.description,
+      price: data.price,
+    });
+    refreshItems();
+  };
+
   const [items, setItems] = useState({ loading: true, items: [], categories: [] });
 
   const refreshItems = async () => {
@@ -57,7 +79,7 @@ export default function Admin() {
       <Container>
         <Row className="mt-2 mb-2">
           <Col>
-            <CreateItemButton></CreateItemButton>
+            <CreateItemButton onSubmitCreate={onSubmitCreate}></CreateItemButton>
           </Col>
           <Col>
             <SortByCategoryButton categories={items.categories} handleSelect={handleSelect}></SortByCategoryButton>
@@ -93,6 +115,7 @@ export default function Admin() {
                           description={item.description}
                           price={item.price}
                           deleteItem={deleteItem}
+                          onSubmitEdit={onSubmitEdit}
                         ></TableData>
                       );
                     })}
@@ -109,6 +132,7 @@ export default function Admin() {
                         description={item.description}
                         price={item.price}
                         deleteItem={deleteItem}
+                        onSubmitEdit={onSubmitEdit}
                       ></TableData>
                     );
                   })}
@@ -121,7 +145,7 @@ export default function Admin() {
   }
 }
 
-function TableData({ id, name, category, imageLink, description, price, deleteItem }) {
+function TableData({ id, name, category, imageLink, description, price, deleteItem, onSubmitEdit }) {
   return (
     <tr style={{ textAlign: 'center', verticalAlign: 'middle' }}>
       <td>{id}</td>
@@ -150,6 +174,7 @@ function TableData({ id, name, category, imageLink, description, price, deleteIt
           imageLink={imageLink}
           description={description}
           price={price}
+          onSubmitEdit={onSubmitEdit}
         ></EditItemButton>
 
         <DeleteItemButton name={name} id={id} deleteItem={deleteItem}></DeleteItemButton>
@@ -192,7 +217,7 @@ function DeleteItemButton({ name, id, deleteItem }) {
   );
 }
 
-function EditItemButton({ name, id, category, imageLink, description, price }) {
+function EditItemButton({ name, id, category, imageLink, description, price, onSubmitEdit }) {
   const [show, setShow] = useState(false);
   const {
     register,
@@ -200,15 +225,6 @@ function EditItemButton({ name, id, category, imageLink, description, price }) {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = async (data) => {
-    await axios.put(`/items/${data.id}`, {
-      name: data.name,
-      CategoryId: data.CategoryId,
-      imageLink: data.imageLink,
-      description: data.description,
-      price: data.price,
-    });
-  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -222,7 +238,7 @@ function EditItemButton({ name, id, category, imageLink, description, price }) {
           <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(onSubmit)} id="editForm">
+          <Form onSubmit={handleSubmit(onSubmitEdit)} id="editForm">
             <input type="hidden" name="id" value={id} {...register('id')} />
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
@@ -292,7 +308,7 @@ function EditItemButton({ name, id, category, imageLink, description, price }) {
   );
 }
 
-function CreateItemButton() {
+function CreateItemButton({ onSubmitCreate }) {
   const [show, setShow] = useState(false);
   const {
     register,
@@ -300,15 +316,6 @@ function CreateItemButton() {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = async (data) => {
-    await axios.post(`/items`, {
-      name: data.name,
-      CategoryId: data.CategoryId,
-      imageLink: data.imageLink,
-      description: data.description,
-      price: data.price,
-    });
-  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -324,7 +331,7 @@ function CreateItemButton() {
           <Modal.Title>Create Item</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(onSubmit)} id="createForm">
+          <Form onSubmit={handleSubmit(onSubmitCreate)} id="createForm">
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
               <Form.Control name="name" placeholder="Insert Item Name" {...register('name', { required: true })} />
