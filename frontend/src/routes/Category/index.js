@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Card, Row, Button, Container, Alert } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
-import { addItemToCartReq } from '../../lib/cart';
+import { makeAddToCartReq, getUsersCart, makeIncQuantReq } from '../../lib/cart';
 import axios from '../../lib/axios';
 
 export default function Category(props) {
@@ -21,8 +21,7 @@ export default function Category(props) {
         return { ...item, isInCart: false };
       });
     if (props.session.loggedIn) {
-      const getCartItems = await axios.get('/cartItems');
-      const userCart = getCartItems.data.filter((item) => item.CartId === props.session.userId);
+      const userCart = await getUsersCart(props.session.userId);
       userCart.forEach((cartItem) => {
         cat.forEach((catItem) => {
           if (cartItem.id === catItem.id) catItem.isInCart = true;
@@ -52,7 +51,7 @@ export default function Category(props) {
 
     console.log(userId);
 
-    const cartItem = await addItemToCartReq(userId, item);
+    const cartItem = await makeAddToCartReq(userId, item);
     console.log(cartItem);
 
     // disables add to cart button and changes button text to inCart
