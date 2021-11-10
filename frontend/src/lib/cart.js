@@ -1,19 +1,26 @@
 import axios from './axios';
 
 export const getUsersCart = async (userId) => {
-  const getCartItems = await axios.get('/cartItems');
-  const userCart = getCartItems.data.filter((item) => item.CartId === userId);
-  return userCart;
+  const response = await axios.get(`/carts/${userId}/cartItems`);
+  // CHECK ERRORS
+  return response.data;
 };
 
-export const makeAddToCartReq = async (userId, item) => {
-  const getCartItem = await axios.get(`/cartItems/${item.id}`);
-  const data = getCartItem.data;
-  if (!Object.values(data).length) {
-    return await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: userId });
-  }
-};
+// export const addToCart = async (userId, itemId) => {
+//   const getCartItem = await axios.get(`/carts/${userId}/cartItems/items?itemId=${itemId}`);
+//   const data = getCartItem.data;
+//   if (!Object.values(data).length) {
+//     return await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: userId });
+//   }
+// };
 
+export const incrementCartItem = async (userId, itemId, amount = 1) => {
+  const response = await axios.post(`/carts/${userId}/cartItems/`, {
+    itemId: itemId,
+    amountToAdd: amount,
+  });
+  return response;
+};
 export const getCartDetails = async (cartItems) => {
   const allItemsReq = await axios.get('/items');
   const items = allItemsReq.data;

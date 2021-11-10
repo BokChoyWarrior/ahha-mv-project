@@ -35,4 +35,6 @@ export function getLocalUser() {
   return localStorage.getItem('user');
 }
 
-export async function clearLocalUser() {}
+export async function clearLocalUser() {
+  localStorage.removeItem('user');
+}

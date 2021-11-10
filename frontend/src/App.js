@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import './App.css';
-import { Navbar, Container, Nav, Button, Col, Row } from 'react-bootstrap';
+import { Navbar, Container, Nav, Button, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Home, Login, Signup, Category, Cart } from './routes';
-import { authUser, clearLocalUser, getLocalUser } from './lib/auth';
+import { authUser, clearLocalUser, getLocalUser, setLocalUser } from './lib/auth';
 import LogoutButton from './components/LogoutButton';
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const [session, setSession] = useState({ loggedIn: false, userId: 0 });
 
   const loginLocalToApp = async () => {
+    setLoading(true);
     const userId = getLocalUser();
-    return await loginToApp(userId);
+    const thisSession = await loginToApp(userId);
+    setLoading(false);
+    return thisSession;
   };
 
   const loginToApp = async (userId) => {
     const authorised = await authUser(userId);
 
     if (authorised) {
+      setLocalUser(userId);
       setSession({ loggedIn: true, userId: authorised.id });
       return true;
     } else {
@@ -31,8 +36,8 @@ function App() {
     clearLocalUser();
   };
 
-  useEffect(() => {
-    loginLocalToApp();
+  useEffect(async () => {
+    await loginLocalToApp();
   }, []);
 
   return (
@@ -54,32 +59,38 @@ function App() {
             </Nav>
           </Container>
         </Navbar>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/categories/:id">
-            <Category session={session} />
-          </Route>
-          <Route exact path="/categories">
-            <Home />
-          </Route>
-          {/* <Route path="/carts">
+        {loading ? (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        ) : (
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/categories/:id">
+              <Category session={session} />
+            </Route>
+            <Route exact path="/categories">
+              <Home />
+            </Route>
+            {/* <Route path="/carts">
             <Cart />
           </Route> */}
-          <Route path="/login">
-            <Login loginToApp={loginToApp} />
-          </Route>
-          <Route path="/signup">
-            <Signup loginToApp={loginToApp} />
-          </Route>
-          <Route path="/mycart">
-            <Cart session={session} />
-          </Route>
-          <Route path="*">
-            <NoMatch />
-          </Route>
-        </Switch>
+            <Route path="/login">
+              <Login loginToApp={loginToApp} />
+            </Route>
+            <Route path="/signup">
+              <Signup loginToApp={loginToApp} />
+            </Route>
+            <Route path="/mycart">
+              <Cart session={session} />
+            </Route>
+            <Route path="*">
+              <NoMatch />
+            </Route>
+          </Switch>
+        )}
       </Router>
     </div>
   );

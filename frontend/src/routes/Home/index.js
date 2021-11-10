@@ -16,7 +16,6 @@ export default function Home() {
       loading: false,
       categories: response.data,
     });
-    console.log(categories);
   };
 
   useEffect(() => {

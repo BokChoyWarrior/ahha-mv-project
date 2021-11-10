@@ -69,14 +69,16 @@ const Cart = sequelize.define('Cart', cartModel);
 const CartItem = sequelize.define('CartItem', cartItemsModel);
 const Item = sequelize.define('Item', itemsModel);
 
+// one to many
 Item.belongsTo(Category);
-
 Category.hasMany(Item);
 
-Cart.hasMany(CartItem);
-
-CartItem.belongsTo(Cart);
-
-CartItem.hasOne(Item);
+// many to many
+Cart.belongsToMany(Item, {
+  through: CartItem,
+});
+Item.belongsToMany(Cart, {
+  through: CartItem,
+});
 
 module.exports = { sequelize, Item, Category, Cart, CartItem };
