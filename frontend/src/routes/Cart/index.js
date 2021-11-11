@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import { Container, Table, Button, Image, ButtonGroup } from 'react-bootstrap';
-import {
-  getUsersCart,
-  getCartDetails,
-  updateCartItemQuant,
-  deleteItemFromCart,
-  incrementCartItem,
-} from '../../lib/cart';
+import { getUsersCart, deleteItemFromCart, incrementCartItem } from '../../lib/cart';
 
 export default function Cart({ session }) {
+  const history = useHistory();
+  if (!session.loggedIn) {
+    history.push('/');
+  }
   const [cart, setCart] = useState([]);
 
   useEffect(async () => {
