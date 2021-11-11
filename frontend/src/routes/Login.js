@@ -15,6 +15,12 @@ export function Login({ loginToApp }) {
     setUserId(event.target.value);
   };
 
+  /**
+   * Logs user into application on login form submit; if entry exists
+   * otherwise triggers modal to show up prompting user to enter valid
+   * input
+   */
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 

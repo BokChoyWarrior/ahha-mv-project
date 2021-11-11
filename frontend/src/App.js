@@ -11,6 +11,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState({ loggedIn: false, userId: 0 });
 
+  /**
+   * In case of refresh, persists users login session and their cart
+   */
+
   const loginLocalToApp = async () => {
     setLoading(true);
     const userId = getLocalUser();
@@ -18,6 +22,12 @@ function App() {
     setLoading(false);
     return thisSession;
   };
+
+  /**
+   *
+   * @param {*} userId - unique identifier (number) assigned to user
+   * @returns true if identifier exists in db; otherwise returns false
+   */
 
   const loginToApp = async (userId) => {
     const authorised = await authUser(userId);
@@ -30,6 +40,11 @@ function App() {
       return false;
     }
   };
+
+  /**
+   * Logs user out of application.
+   * clears userId (which is a cartId) from localStorage
+   */
 
   const logoutOfApp = async () => {
     setSession({ loggedIn: false, userId: 0 });

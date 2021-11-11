@@ -15,12 +15,23 @@ export default function Category({ session }) {
   const { id } = useParams();
   const history = useHistory();
 
+  /**
+   * makes GET request to /categories endpoint. Uses route category id parameter to request specific category items
+   * @returns items array
+   */
+
   const getItems = async () => {
     const response = await axios.get(`/categories/${id}?getNested=true`);
 
     categoryName = response.data.name;
     return response.data.Items;
   };
+
+  /**
+   * checks is a user session is present
+   * sets isLoading state component to true while users cart information request completes.
+   * adds property to cart
+   */
 
   const refreshItems = async () => {
     setItemsLoading(true);
@@ -36,6 +47,10 @@ export default function Category({ session }) {
     setItems(quantifiedItems);
     setItemsLoading(false);
   };
+
+  /**
+   * adds property to temp
+   */
 
   const addQuantityProperty = (tempItems, tempCart) => {
     console.log(tempItems, tempCart);

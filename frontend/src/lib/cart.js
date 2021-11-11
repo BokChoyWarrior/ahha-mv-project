@@ -1,5 +1,10 @@
 import axios from './axios';
 
+/**
+ * makes a request to users cart
+ * returns response body
+ */
+
 export const getUsersCart = async (userId) => {
   const response = await axios.get(`/carts/${userId}/cartItems`);
   // CHECK ERRORS

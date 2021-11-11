@@ -13,6 +13,14 @@ export function Signup({ loginToApp }) {
 
   const handleShow = () => setShow(true);
 
+  /**
+   * controls what happends when signup form submission happens
+   * prevents default browser behaviour
+   * makes a request to cart API endpoint to create a new cart entry in Carts table
+   * sets cartId which will be the usersId to component state
+   * triggers modal to open which will display the users assigned cartId/userId
+   */
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const cart = await axios.post('/carts');
@@ -20,6 +28,11 @@ export function Signup({ loginToApp }) {
     setLocalUser(userId);
     handleShow();
   };
+
+  /**
+   * logs user in when they sign up
+   * redirects user to homepage on if login attempt successful
+   */
 
   const handleHomepage = async () => {
     const loggedIn = await loginToApp(userId);

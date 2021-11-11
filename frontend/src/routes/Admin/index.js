@@ -25,6 +25,10 @@ export default function Admin() {
     setCategory(parseInt(e));
   };
 
+  /**
+   * deletes item
+   */
+
   const deleteItem = async (id) => {
     await axios.delete(`/items/${id}`);
     refreshItems();

@@ -8,6 +8,11 @@ export default function Home() {
   const history = useHistory();
   const [categories, setCategories] = useState({ loading: true, categories: [] });
 
+  /**
+   * fetches existant item categories information form categories Endpoint
+   * updates component state with response body and sets loading property to false
+   */
+
   const refreshCategories = async () => {
     // const response = await axios.get('/products/categories');
     const response = await axios.get('/categories');
@@ -18,13 +23,25 @@ export default function Home() {
     });
   };
 
+  /**
+   * runs callback body on component render
+   */
+
   useEffect(() => {
     refreshCategories();
   }, []);
 
+  /**
+   * redirect
+   */
+
   const viewCategory = (categoryId) => {
     history.push(`/categories/${categoryId}`);
   };
+
+  /**
+   * renders loading, while api request ongoing; otherwise renders category list
+   */
 
   if (categories.loading) {
     return <h1>Loading...</h1>;

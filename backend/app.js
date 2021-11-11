@@ -10,6 +10,9 @@ const indexApi = require('./routes/api');
 
 const app = express();
 
+/**
+ * express server configurations
+ */
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

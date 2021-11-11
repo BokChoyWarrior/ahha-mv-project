@@ -31,9 +31,18 @@ export async function setLocalUser(userId) {
   localStorage.setItem('user', userId);
 }
 
+/**
+ * checks localStorage for user sesssion
+ * @returns userId; a number, if exists; otherwise null
+ */
+
 export function getLocalUser() {
   return localStorage.getItem('user');
 }
+
+/**
+ * removes user key-value pair from localStorage
+ */
 
 export async function clearLocalUser() {
   localStorage.removeItem('user');
