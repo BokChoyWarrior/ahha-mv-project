@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-route
 import './App.css';
 import { Navbar, Container, Nav, Button, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Categories, Home, Admin } from './routes';
 import { Home, Login, Signup, Category, Cart } from './routes';
 import { authUser, clearLocalUser, getLocalUser, setLocalUser } from './lib/auth';
 import LogoutButton from './components/LogoutButton';
@@ -77,6 +78,9 @@ function App() {
             {/* <Route path="/carts">
             <Cart />
           </Route> */}
+            <Route path="/admin">
+              <Admin />
+            </Route>
             <Route path="/login">
               <Login loginToApp={loginToApp} />
             </Route>

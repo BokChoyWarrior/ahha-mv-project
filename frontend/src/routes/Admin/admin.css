@@ -1,0 +1,9 @@
+.error {
+  color: red;
+}
+
+.table thead th {
+  position: sticky;
+  top: -1px;
+  background-color: grey;
+}
