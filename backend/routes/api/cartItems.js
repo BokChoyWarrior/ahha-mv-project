@@ -42,7 +42,8 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const item = await CartItem.findOne({ where: { id: req.params.id } });
+    console.log(req.query);
+    const item = await CartItem.findOne({ where: { ItemId: req.params.id, CartId: req.query.cartId } });
 
     if (item) {
       await item.destroy();
