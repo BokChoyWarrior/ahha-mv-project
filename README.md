@@ -127,6 +127,10 @@ General tools:
 
 ## Group responsibilities
 
+It's safe to say we all learned something from this project. At the time of writing, each of us has, at some point, worked with every other person on a feature. This meant that we were able to learn from each other while also catching mistakes early.
+
+Despite working 100% remote, the full-time zoom call enabled us to catch up multiple times per day and make sure we all had something to work on and could identify any blockers early.
+
 ### Backend
 
 - Creating models
@@ -145,9 +149,11 @@ General tools:
 - Admin page
   - Alfonso
 - Category page + logic
-  - Abdi + Harvey
+  - Abdi + Harvey + Heather
 - Cart page
   - Abdi
+- Responsive design
+  - Everyone (helped by Bootstrap)
 
 ### Misc.
 
