@@ -7,9 +7,10 @@ export default function Cart(props) {
 
   useEffect(async () => {
     const userCart = await getUsersCart(props.session.userId);
-    const cartData = await getCartDetails(userCart);
+    // console.log(userCart);
+    // const cartData = await getCartDetails(userCart);
 
-    setCart(cartData);
+    setCart(userCart);
   }, []);
 
   const handleRemove = (itemId) => {
@@ -69,18 +70,18 @@ function TableRow(props) {
       </td>
       <td>{item.name}</td>
       <td>£{item.price}</td>
-      <td>{item.quantity}</td>
+      <td>{item.CartItem.quantity}</td>
       <td style={{ verticalAlign: 'middle' }}>
         <ButtonGroup vertical className="d-flex align-items-center">
           <Button onClick={() => onRemoveClick(item.id)} variant="danger">
             Remove
           </Button>
           {item.quantity > 1 ? (
-            <Button onClick={() => decreaseQuant(item.quantity)} variant="warning">
+            <Button onClick={() => decreaseQuant(item.CartItem.quantity)} variant="warning">
               Descrease
             </Button>
           ) : null}
-          <Button onClick={() => increaseQuant(item.quantity)}>Increase</Button>
+          <Button onClick={() => increaseQuant(item.CartItem.quantity)}>Increase</Button>
         </ButtonGroup>
       </td>
     </tr>
