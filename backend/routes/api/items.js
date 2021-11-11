@@ -20,7 +20,11 @@ router.get('/:id', async (req, res) => {
       },
     });
 
-    res.status(200).send(item);
+    if (item) {
+      res.status(200).send(item);
+    } else {
+      res.status(404).end();
+    }
   } catch (e) {
     res.status(400).send(e.message);
   }
@@ -40,8 +44,12 @@ router.delete('/:id', async (req, res) => {
   try {
     const item = await Item.findOne({ where: { id: req.params.id } });
 
-    await item.destroy();
-    res.status(200).send(item);
+    if (item) {
+      await item.destroy();
+      res.status(200).send(item);
+    } else {
+      res.status(404).end();
+    }
   } catch (e) {
     res.status(400).send(e.message);
   }
@@ -50,9 +58,13 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const item = await Item.findOne({ where: { id: req.params.id } });
-    await item.update(req.body);
 
-    res.status(200).send(item);
+    if (item) {
+      await item.update(req.body);
+      res.status(200).send(item);
+    } else {
+      res.status(404).end();
+    }
   } catch (e) {
     res.status(400).send(e.message);
   }

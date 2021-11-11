@@ -16,7 +16,6 @@ export default function Home() {
       loading: false,
       categories: response.data,
     });
-    console.log(categories);
   };
 
   useEffect(() => {
@@ -32,7 +31,7 @@ export default function Home() {
   } else {
     return (
       <Container fluid="md">
-        <Row xs="auto" className="auto g-4 my-4">
+        <Row xs={1} md={2} lg={4} className="g-4">
           {categories.categories.map((category) => {
             return (
               <Col key={category.id} className="mx-auto hover-pointer">
