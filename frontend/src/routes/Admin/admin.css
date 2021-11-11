@@ -7,3 +7,16 @@
   top: -1px;
   background-color: grey;
 }
+
+@media (max-width: 992px) {
+  #category,
+  #image,
+  #description,
+  #price,
+  #categoryHeader,
+  #imageHeader,
+  #descriptionHeader,
+  #priceHeader {
+    display: none;
+  }
+}

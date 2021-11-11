@@ -91,10 +91,10 @@ export default function Admin() {
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Category</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Price</th>
+                <th id="categoryHeader">Category</th>
+                <th id="imageHeader">Image</th>
+                <th id="descriptionHeader">Description</th>
+                <th id="priceHeader">Price</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -148,12 +148,13 @@ function TableData({ id, name, category, imageLink, description, price, deleteIt
     <tr>
       <td>{id}</td>
       <td>{name}</td>
-      <td>{category}</td>
-      <td>
+      <td id="category">{category}</td>
+      <td id="image">
         <img src={imageLink} style={{ height: '50px' }}></img>
       </td>
 
       <td
+        id="description"
         style={{
           maxWidth: '250px',
           textOverflow: 'ellipsis',
@@ -163,7 +164,7 @@ function TableData({ id, name, category, imageLink, description, price, deleteIt
       >
         {description}
       </td>
-      <td>£{price}</td>
+      <td id="price">£{price}</td>
       <td>
         <EditItemButton
           id={id}
