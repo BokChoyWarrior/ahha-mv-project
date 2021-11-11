@@ -41,6 +41,10 @@ export const getCartDetails = async (cartItems) => {
   return cartDetails.filter((item) => item);
 };
 
+/**
+ * holdover - likely not being used.
+ */
+
 export const updateCartItemQuant = async (itemId, quantity) => {
   await axios.put(`/cartItems/${itemId}`, { quantity: quantity });
 };

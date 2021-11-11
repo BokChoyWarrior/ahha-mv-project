@@ -50,7 +50,8 @@ export default function Category({ session }) {
   };
 
   /**
-   * adds property to temp
+   * adds property to quantityInCart with initial value zero to tempItems (not mutated) and assigns result to initialisedItems
+   * iterates over, initialisedItems, checks if each item exists in cart, if it does
    */
 
   const addQuantityProperty = (tempItems, tempCart) => {
