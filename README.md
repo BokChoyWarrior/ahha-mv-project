@@ -138,7 +138,7 @@ Despite working 100% remote, the full-time zoom call enabled us to catch up mult
 - Creating most of the API
   - Heather + Alfonso
 - Testing
-  - Heather
+  - Heather + Alfonso
 
 ### Frontend
 
