@@ -114,6 +114,16 @@ General tools:
 
 [**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
 
+### UI Wireframes
+
+![](./docs/UI_wireframes/home_page.png)
+
+![](./docs/UI_wireframes/category_page.png)
+
+![](./docs/UI_wireframes/admin_page.png)
+
+[**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
+
 ## Requirements
 
 ### Functional requirements
