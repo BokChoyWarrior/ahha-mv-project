@@ -40,8 +40,8 @@ export const updateCartItemQuant = async (itemId, quantity) => {
   await axios.put(`/cartItems/${itemId}`, { quantity: quantity });
 };
 
-export const deleteItemFromCart = async (itemId) => {
-  await axios.delete(`/cartItems/${itemId}`);
+export const deleteItemFromCart = async (itemId, userId) => {
+  await axios.delete(`/cartItems/${itemId}?cartId=${userId}`);
 };
 
 /* needs work */

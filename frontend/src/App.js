@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-route
 import './App.css';
 import { Navbar, Container, Nav, Button, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Home, Login, Signup, Category, Cart, Categories, Admin } from './routes';
+import { Home, Login, Signup, Category, Cart, Admin } from './routes';
 import { authUser, clearLocalUser, getLocalUser, setLocalUser } from './lib/auth';
 import LogoutButton from './components/LogoutButton';
 
