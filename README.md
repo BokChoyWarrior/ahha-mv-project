@@ -6,8 +6,9 @@ This project was created by [Heather P](https://github.com/hpaterson97), [Alfons
 
 - [How to run](https://github.com/BokChoyWarrior/ahha-mv-project#how-to-run-project)
 - [Features](https://github.com/BokChoyWarrior/ahha-mv-project#features)
-- [Project Design](https://github.com/BokChoyWarrior/ahha-mv-project#planning)
-- [Planning](https://github.com/BokChoyWarrior/ahha-mv-project#hot-to-run-project)
+- [Project Design](https://github.com/BokChoyWarrior/ahha-mv-project#project-design)
+- [Planning](https://github.com/BokChoyWarrior/ahha-mv-project#planning)
+- [Group Responsibilities](https://github.com/BokChoyWarrior/ahha-mv-project#group-responsibilities)
 - [Requirements](https://github.com/BokChoyWarrior/ahha-mv-project#requirements)
 
 ---
@@ -121,6 +122,39 @@ General tools:
 ![](./docs/UI_wireframes/category_page.png)
 
 ![](./docs/UI_wireframes/admin_page.png)
+
+[**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
+
+## Group responsibilities
+
+### Backend
+
+- Creating models
+  - Everyone
+- Creating most of the API
+  - Heather + Alfonso
+- Testing
+  - Heather
+
+### Frontend
+
+- Homepage
+  - Harvey + Abdi
+- Login pages/system
+  - Heather + Harvey
+- Admin page
+  - Alfonso
+- Category page + logic
+  - Abdi + Harvey
+- Cart page
+  - Abdi
+
+### Misc.
+
+- README
+  - Harvey
+- Code documentation
+  - Abdi
 
 [**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
 
