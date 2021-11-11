@@ -238,11 +238,11 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
           <Modal.Title>Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit(onSubmitEdit)} id="editForm">
+          <Form onSubmit={handleSubmit(onSubmitEdit)} onLoad={handleSubmit(onSubmitEdit)} id="editForm">
             <input type="hidden" name="id" value={id} {...register('id')} />
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
-              <Form.Control name="name" defaultValue={name} {...register('name', { required: true })} />
+              <Form.Control name="name" defaultValue={name} id="editName" {...register('name', { required: true })} />
               {errors.name && <p className="error">The Name field is required</p>}
             </Form.Group>
 
@@ -262,6 +262,7 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
               <Form.Control
                 as="textarea"
                 style={{ height: '100px' }}
+                id="editImageLink"
                 defaultValue={imageLink}
                 {...register('imageLink', { required: true })}
               />
@@ -271,6 +272,7 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
+                id="editDescription"
                 style={{ height: '150px' }}
                 type="description"
                 defaultValue={description}
@@ -279,7 +281,11 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Price</Form.Label>
-              <Form.Control defaultValue={price} {...register('price', { required: true, min: 0, max: 1500 })} />
+              <Form.Control
+                defaultValue={price}
+                id="editPrice"
+                {...register('price', { required: true, min: 0, max: 1500 })}
+              />
               {errors.price && <p className="error">The Price field is required and needs to be a number up to 1500</p>}
             </Form.Group>
           </Form>
@@ -294,8 +300,12 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
             form="editForm"
             variant="success"
             onClick={() => {
-              const form = document.getElementById('editForm');
-              if (form.getElementsByTagName('p').length === 0) {
+              const name = document.getElementById('editName').value;
+              const imageLink = document.getElementById('editImageLink').value;
+              const description = document.getElementById('editDescription').value;
+              const price = document.getElementById('editPrice').value;
+              // if (form.getElementsByTagName('p').length === 0) {
+              if (name !== '' && imageLink !== '' && description !== '' && price !== '') {
                 handleClose();
               }
             }}
@@ -334,7 +344,12 @@ function CreateItemButton({ onSubmitCreate }) {
           <Form onSubmit={handleSubmit(onSubmitCreate)} id="createForm">
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
-              <Form.Control name="name" placeholder="Insert Item Name" {...register('name', { required: true })} />
+              <Form.Control
+                id="createName"
+                name="name"
+                placeholder="Insert Item Name"
+                {...register('name', { required: true })}
+              />
               {errors.name && <p className="error">The Name field is required</p>}
             </Form.Group>
 
@@ -353,6 +368,7 @@ function CreateItemButton({ onSubmitCreate }) {
               <Form.Label>Image Link</Form.Label>
               <Form.Control
                 as="textarea"
+                id="createImageLink"
                 style={{ height: '100px' }}
                 placeholder="Insert Item Image Link"
                 {...register('imageLink', { required: true })}
@@ -363,6 +379,7 @@ function CreateItemButton({ onSubmitCreate }) {
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
+                id="createDescription"
                 style={{ height: '150px' }}
                 placeholder="Insert Item Descritpion"
                 {...register('description', { required: true })}
@@ -372,6 +389,7 @@ function CreateItemButton({ onSubmitCreate }) {
             <Form.Group className="mb-3">
               <Form.Label>Price</Form.Label>
               <Form.Control
+                id="createPrice"
                 placeholder="Insert Item Price"
                 {...register('price', { required: true, min: 0, max: 1500 })}
               />
@@ -389,8 +407,12 @@ function CreateItemButton({ onSubmitCreate }) {
             form="createForm"
             variant="success"
             onClick={() => {
-              const form = document.getElementById('createForm');
-              if (form.getElementsByTagName('p').length === 0) {
+              const name = document.getElementById('createName').value;
+              const imageLink = document.getElementById('createImageLink').value;
+              const description = document.getElementById('createDescription').value;
+              const price = document.getElementById('createPrice').value;
+              // if (form.getElementsByTagName('p').length === 0) {
+              if (name !== '' && imageLink !== '' && description !== '' && price !== '') {
                 handleClose();
               }
             }}
