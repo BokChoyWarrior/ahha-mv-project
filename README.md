@@ -37,7 +37,7 @@ Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
 The app comes with a pre-seeded database with four categories containing items, and two users.
 
-[⬆ Back to contents ⬆](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
+[**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
 
 ## Brief overview
 
@@ -70,7 +70,7 @@ If the user _is_ logged in (reminder: login with userID `1`), they should be abl
 
 If you ever want to view all the items in your cart, simply click on the **My Cart** button and here you will be able to edit to your heart's desire.
 
-[⬆ Back to contents ⬆](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
+[**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
 
 ## Project Design
 
@@ -104,7 +104,7 @@ General tools:
 
 **ESLint** and **Prettier** both helped our collaboration in git because code style was enforced, meaning no whitespace commit changes when viewing the git diff.
 
-[⬆ Back to contents ⬆](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
+[**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
 
 ## Planning
 
@@ -112,7 +112,7 @@ General tools:
 
 ![](./docs/UML-use-case.png)
 
-[⬆ Back to contents ⬆](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
+[**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
 
 ## Requirements
 
@@ -143,7 +143,7 @@ General tools:
 - links the the database design
 - links to a unit test coverage report
 
-[⬆ Back to contents ⬆](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
+[**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
 
 ### Testing section
 
