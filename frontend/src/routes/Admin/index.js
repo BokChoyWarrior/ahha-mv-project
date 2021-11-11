@@ -86,41 +86,23 @@ export default function Admin() {
           </Col>
         </Row>
         <Row>
-          <Col>
-            <Table bordered responsive="xs">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Image</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {categorySelected !== 0 &&
-                  items.items
-                    .filter((e) => e.CategoryId === categorySelected)
-                    .map((item) => {
-                      const categoryName = items.categories.find((e) => e.id === item.CategoryId).name;
-                      return (
-                        <TableData
-                          key={item.id}
-                          id={item.id}
-                          name={item.name}
-                          category={categoryName}
-                          imageLink={item.imageLink}
-                          description={item.description}
-                          price={item.price}
-                          deleteItem={deleteItem}
-                          onSubmitEdit={onSubmitEdit}
-                        ></TableData>
-                      );
-                    })}
-                {categorySelected === 0 &&
-                  items.items.map((item) => {
+          <Table bordered responsive>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+              {categorySelected !== 0 &&
+                items.items
+                  .filter((e) => e.CategoryId === categorySelected)
+                  .map((item) => {
                     const categoryName = items.categories.find((e) => e.id === item.CategoryId).name;
                     return (
                       <TableData
@@ -136,9 +118,25 @@ export default function Admin() {
                       ></TableData>
                     );
                   })}
-              </tbody>
-            </Table>
-          </Col>
+              {categorySelected === 0 &&
+                items.items.map((item) => {
+                  const categoryName = items.categories.find((e) => e.id === item.CategoryId).name;
+                  return (
+                    <TableData
+                      key={item.id}
+                      id={item.id}
+                      name={item.name}
+                      category={categoryName}
+                      imageLink={item.imageLink}
+                      description={item.description}
+                      price={item.price}
+                      deleteItem={deleteItem}
+                      onSubmitEdit={onSubmitEdit}
+                    ></TableData>
+                  );
+                })}
+            </tbody>
+          </Table>
         </Row>
       </Container>
     );
@@ -147,7 +145,7 @@ export default function Admin() {
 
 function TableData({ id, name, category, imageLink, description, price, deleteItem, onSubmitEdit }) {
   return (
-    <tr style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+    <tr>
       <td>{id}</td>
       <td>{name}</td>
       <td>{category}</td>
