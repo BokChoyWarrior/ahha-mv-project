@@ -48,10 +48,10 @@ export default function Home() {
   } else {
     return (
       <Container fluid="md">
-        <Row xs={1} md={2} lg={4} className="g-4">
+        <Row xs={1} md={2} lg={3} xl={4}>
           {categories.categories.map((category) => {
             return (
-              <Col key={category.id} className="mx-auto hover-pointer">
+              <Col key={category.id} className="mx-auto my-2 hover-pointer">
                 <CategoryCard
                   name={category.name}
                   imageLink={category.imageLink}
@@ -68,7 +68,7 @@ export default function Home() {
 
 function CategoryCard({ imageLink, name, view }) {
   return (
-    <Card className="my-auto hover-shadow" style={{ width: '18rem' }} onClick={view}>
+    <Card className="mx-auto hover-shadow" style={{ width: '18rem' }} onClick={view}>
       <Card.Img variant="top" src={imageLink} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>

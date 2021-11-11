@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import './App.css';
-import { Navbar, Container, Nav, Button, Spinner } from 'react-bootstrap';
+import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Home, Login, Signup, Category, Cart, Admin } from './routes';
 import { authUser, clearLocalUser, getLocalUser, setLocalUser } from './lib/auth';
 import LogoutButton from './components/LogoutButton';
+import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -75,9 +76,7 @@ function App() {
           </Container>
         </Navbar>
         {loading ? (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <LoadingSpinner />
         ) : (
           <Switch>
             <Route exact path="/">

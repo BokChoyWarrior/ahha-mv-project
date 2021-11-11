@@ -132,7 +132,7 @@ General tools:
 - [x] **F2** - The application must display as a minimum, an image, price and description of each item
 - [x] **F3+F4** - The application must allow for items to be added/removed to/from a shopping cart
 - [x] **F5** - The shopping cart must persist its state when the browser is closed
-- [ ] **F6** - The application must work well on a mobile as well as a desktop device
+- [x] **F6** - The application must work well on a mobile as well as a desktop device
 - [x] **F7** - (optional) - The application should support an admin interface to allow for new items to be uploaded for sale
 - [x] **F8** - (optional) - The application should support an admin interface to allow for item descriptions to be updated
 - [x] **F9** - optional) - The application should support an admin interface to allow for items to be removed from sale
