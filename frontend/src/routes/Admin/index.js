@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import './admin.css';
 // import { useHistory } from 'react-router';
 import axios from '../../lib/axios';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function Admin() {
   //   const history = useHistory();
@@ -73,7 +74,7 @@ export default function Admin() {
   //   };
 
   if (items.loading) {
-    return <h1>LOADING!!!</h1>;
+    return <LoadingSpinner />;
   } else {
     return (
       <Container>
@@ -221,7 +222,6 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -322,7 +322,6 @@ function CreateItemButton({ onSubmitCreate }) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -429,7 +428,7 @@ function SortByCategoryButton({ categories, handleSelect }) {
     <ButtonGroup>
       <DropdownButton as={ButtonGroup} title="Category" id="bg-nested-dropdown" onSelect={handleSelect}>
         <Dropdown.Item eventKey={0}>All</Dropdown.Item>
-        {categories.map((category, i) => {
+        {categories.map((category) => {
           return (
             <Dropdown.Item key={category.id} eventKey={category.id}>
               {category.name}

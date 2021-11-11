@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { Container, Table, Button, Image, ButtonGroup } from 'react-bootstrap';
 import { getUsersCart, deleteItemFromCart, incrementCartItem } from '../../lib/cart';
+import './Cart.css';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function Cart({ session }) {
   const history = useHistory();
@@ -9,14 +11,13 @@ export default function Cart({ session }) {
     history.push('/');
   }
   const [cart, setCart] = useState([]);
+  const [isCartLoading, setIsCartLoading] = useState(true);
 
   useEffect(async () => {
     const userCart = await getUsersCart(session.userId);
-    console.log(userCart);
-    // console.log(userCart);
-    // const cartData = await getCartDetails(userCart);
 
     setCart(addQuantityInCartKey(userCart));
+    setIsCartLoading(false);
   }, []);
 
   const addQuantityInCartKey = (cart) => {
@@ -48,23 +49,21 @@ export default function Cart({ session }) {
       return item;
     });
     setCart(newCart);
-
-    console.log('updated quantity:', cart);
   };
 
-  if (!cart.length) {
-    return <h2>Loading...</h2>;
+  if (isCartLoading) {
+    return <LoadingSpinner />;
   }
 
   return (
     <Container>
-      <Table bordered hover responsive>
+      <Table bordered hover responsive="lg" size="sm">
         <thead>
           <tr>
-            <th>Image</th>
+            <th name="image">Image</th>
             <th>Name</th>
             <th>Price</th>
-            <th>Quantity</th>
+            <th>#</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -95,23 +94,23 @@ function TableRow({ item, decrementItem, incrementItem, handleRemove, session })
 
   return (
     <tr>
-      <td>
-        <Image style={{ width: '250px' }} src={item.imageLink} class="img-fluid" />
+      <td colSpan="1" name="image">
+        <Image width="50" src={item.imageLink} />
       </td>
       <td>{item.name}</td>
       <td>£{item.price}</td>
       <td>{item.quantityInCart}</td>
-      <td style={{ verticalAlign: 'middle' }}>
+      <td>
         <ButtonGroup vertical className="d-flex align-items-center">
+          <Button onClick={() => incrementItem(item.id)}>Increase</Button>
+          {item.quantityInCart > 1 ? (
+            <Button onClick={() => decrementItem(item.id)} variant="warning">
+              Decrease
+            </Button>
+          ) : null}
           <Button onClick={() => onRemoveClick(item.id)} variant="danger">
             Remove
           </Button>
-          {item.quantityInCart > 1 ? (
-            <Button onClick={() => decrementItem(item.id)} variant="warning">
-              Descrease
-            </Button>
-          ) : null}
-          <Button onClick={() => incrementItem(item.id)}>Increase</Button>
         </ButtonGroup>
       </td>
     </tr>

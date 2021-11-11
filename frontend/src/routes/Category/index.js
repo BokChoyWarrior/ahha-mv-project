@@ -3,6 +3,7 @@ import { Col, Card, Row, Button, Container } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
 import { incrementCartItem, getUsersCart } from '../../lib/cart';
 import axios from '../../lib/axios';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function Category({ session }) {
   // defined initial useState
@@ -85,7 +86,7 @@ export default function Category({ session }) {
   };
 
   if (itemsLoading) {
-    return <h1>loading</h1>;
+    return <LoadingSpinner />;
   } else {
     // return list of items in inside of JSX (html) for showing on the browser
     return (
