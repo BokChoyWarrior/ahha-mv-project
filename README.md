@@ -140,7 +140,7 @@ General tools:
 ### Non-Functional requirements
 
 - [x] **NF1** - The application must have client & server-side validation in place
-- [ ] **NF2** - The application must have evidence of automated unit testing
+- [x] **NF2** - The application must have evidence of automated unit testing
 - [ ] **NF3** - The application code must be documented in a manner that it would be easy for a new developer to understand
 - [x] **NF4** - The application code must be stored in a GitHub repository - Well, here you are!
 - [ ] **NF5** - There must be documentation which describes these features:
