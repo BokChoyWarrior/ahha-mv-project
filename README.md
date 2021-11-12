@@ -197,6 +197,4 @@ Despite working 100% remote, the full-time zoom call enabled us to catch up mult
 
 ### Testing section
 
-For now we only have created tests for the backend API due to time constraints.
-
-// TODO
+For now we have only created tests for the backend API due to time constraints.
