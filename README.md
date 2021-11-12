@@ -9,6 +9,7 @@ This project was created by [Heather P](https://github.com/hpaterson97), [Alfons
 - [Project Design](https://github.com/BokChoyWarrior/ahha-mv-project#project-design)
 - [Planning](https://github.com/BokChoyWarrior/ahha-mv-project#planning)
 - [Group Responsibilities](https://github.com/BokChoyWarrior/ahha-mv-project#group-responsibilities)
+- [Testing](https://github.com/BokChoyWarrior/ahha-mv-project#testing)
 - [Requirements](https://github.com/BokChoyWarrior/ahha-mv-project#requirements)
 
 ---
@@ -125,6 +126,14 @@ General tools:
 
 [**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
 
+## Testing
+
+For now we have only created tests for the backend API due to time constraints.
+
+We would have liked to test the react part, but sadly ran out of time.
+
+[**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
+
 ## Group responsibilities
 
 It's safe to say we all learned something from this project. At the time of writing, each of us has, at some point, worked with every other person on a feature. This meant that we were able to learn from each other while also catching mistakes early.
@@ -183,7 +192,7 @@ Despite working 100% remote, the full-time zoom call enabled us to catch up mult
 - [x] **NF2** - The application must have evidence of automated unit testing
 - [x] **NF3** - The application code must be documented in a manner that it would be easy for a new developer to understand
 - [x] **NF4** - The application code must be stored in a GitHub repository - Well, here you are!
-- [ ] **NF5** - There must be documentation which describes these features:
+- [x] **NF5** - There must be documentation which describes these features:
 - how to run the application
 - features of the application
 - design decisions
@@ -194,7 +203,3 @@ Despite working 100% remote, the full-time zoom call enabled us to catch up mult
 - links to a unit test coverage report
 
 [**⬆ Back to contents ⬆**](https://github.com/BokChoyWarrior/ahha-mv-project#contents)
-
-### Testing section
-
-For now we have only created tests for the backend API due to time constraints.
