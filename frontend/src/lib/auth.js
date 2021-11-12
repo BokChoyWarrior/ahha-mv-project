@@ -1,7 +1,10 @@
 import axios from './axios';
 
-// Thismethod takes a userId and checks if a cart exists with that ID. If so returns the cart, else, false
-// userId will actually reference a Cart model
+/**
+ * Checks if a cart exists with `userId` and returns cart if so.
+ * @param {number} userId
+ * @returns {Object | false}
+ */
 export async function authUser(userId) {
   try {
     const response = await axios.get(`/carts/${userId}`);
@@ -15,7 +18,9 @@ export async function authUser(userId) {
   }
 }
 
-// Doesn't need userID, takes it from localstorage
+/**
+ * Takes userId from localStorage and then tries to {@link authUser}
+ */
 export async function authLocalUser() {
   const localUser = getLocalUser();
 
@@ -26,14 +31,21 @@ export async function authLocalUser() {
   }
 }
 
-// Needs a userId and saves to localstorage
 export async function setLocalUser(userId) {
   localStorage.setItem('user', userId);
 }
 
+/**
+ * checks localStorage for user sesssion
+ * @returns userId; a number, if exists; otherwise null
+ */
 export function getLocalUser() {
   return localStorage.getItem('user');
 }
+
+/**
+ * Removes user key-value pair from localStorage
+ */
 
 export async function clearLocalUser() {
   localStorage.removeItem('user');

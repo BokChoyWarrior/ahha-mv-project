@@ -2,6 +2,10 @@ const { readFileSync } = require('fs');
 
 const { sequelize, CartItem, Cart, Item, Category } = require('./database/models');
 
+/**
+ * Seeds/populates (fills) the Category and Item tables in the database with initial data from file seedDB.js
+ */
+
 // ONLY run this if the universe explodes and we need new items
 
 // Migrate 1

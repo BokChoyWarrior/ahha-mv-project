@@ -10,6 +10,9 @@ const indexApi = require('./routes/api');
 
 const app = express();
 
+/**
+ * express server configurations
+ */
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +22,7 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/api', indexApi);
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

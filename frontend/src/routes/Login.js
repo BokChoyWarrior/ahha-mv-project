@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 
+/**
+ * Login component
+ * shows login form.
+ * on submission with valid input, redirects
+ * user to home page; otherwise displays
+ * modal promting user to enter valid (existant) userId
+ */
+
 export function Login({ loginToApp }) {
   const history = useHistory();
   const [userId, setUserId] = useState(null);
@@ -14,6 +22,12 @@ export function Login({ loginToApp }) {
   const handleIdChange = (event) => {
     setUserId(event.target.value);
   };
+
+  /**
+   * Logs user into application on login form submit; if entry exists
+   * otherwise triggers modal to show up prompting user to enter valid
+   * input
+   */
 
   const handleSubmit = async (event) => {
     event.preventDefault();

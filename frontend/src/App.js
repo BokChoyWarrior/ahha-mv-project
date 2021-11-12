@@ -12,6 +12,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState({ loggedIn: false, userId: 0 });
 
+  /**
+   * In case of refresh, persists users login session
+   */
+
   const loginLocalToApp = async () => {
     setLoading(true);
     const userId = getLocalUser();
@@ -19,6 +23,12 @@ function App() {
     setLoading(false);
     return thisSession;
   };
+
+  /**
+   *
+   * @param {number | string} userId - unique identifier (number) assigned to user
+   * @returns {boolean}
+   */
 
   const loginToApp = async (userId) => {
     const authorised = await authUser(userId);
@@ -32,10 +42,20 @@ function App() {
     }
   };
 
+  /**
+   * Logs user out of application.
+   * clears userId (which is a cartId) from localStorage
+   */
+
   const logoutOfApp = async () => {
     setSession({ loggedIn: false, userId: 0 });
     clearLocalUser();
   };
+
+  /**
+   * callback arguments body runs on intitial component render
+   * checks localStorage for user session
+   */
 
   useEffect(async () => {
     await loginLocalToApp();
@@ -63,30 +83,37 @@ function App() {
         {loading ? (
           <LoadingSpinner />
         ) : (
+          // We use a switch statement from react-router to simulate actual browser history
+          // and so that the back button will work predictably.
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route exact path="/categories/:id">
+            {/* Home Page */}
+            {/* Categories Page - List of items in specific category */}
+            {/* Home Page */}
+            <Route path="/categories/:id">
               <Category session={session} />
             </Route>
-            <Route exact path="/categories">
+            <Route path="/categories">
               <Home />
             </Route>
-            {/* <Route path="/carts">
-            <Cart />
-          </Route> */}
+            {/* Admin Page */}
             <Route path="/admin">
               <Admin />
             </Route>
+            {/* Login Page for application/website */}
             <Route path="/login">
               <Login loginToApp={loginToApp} />
             </Route>
+            {/* Sign up page for application/website */}
             <Route path="/signup">
               <Signup loginToApp={loginToApp} />
             </Route>
+            {/* Page for Users Cart - Table that lists items in users cart */}
             <Route path="/mycart">
               <Cart session={session} />
+            </Route>
+            {/* Renders NoMatch Component for any route that doesn't match any of the above routes */}
+            <Route exact path="/">
+              <Home />
             </Route>
             <Route path="*">
               <NoMatch />
@@ -98,6 +125,10 @@ function App() {
   );
 }
 
+/**
+ * If user is logged in, displays their user id. If not shows is not logged in center of nav bar
+ */
+
 function WelcomeMessage({ userId }) {
   if (userId) {
     return <Navbar.Text>{`User: ${userId}`}</Navbar.Text>;
@@ -106,8 +137,13 @@ function WelcomeMessage({ userId }) {
   }
 }
 
+/**
+ * If logged in, displays buttons MyCart and Logout.
+ * else displays buttons Login and SignUp
+ */
+
 function UserOptions({ session, children }) {
-  if (session.loggedIn === true) {
+  if (session.loggedIn) {
     return (
       <>
         <LinkContainer to="/mycart" className="mx-2">
@@ -130,6 +166,10 @@ function UserOptions({ session, children }) {
     );
   }
 }
+
+/**
+ * gets location object from useLocation hook
+ */
 
 function NoMatch() {
   let location = useLocation();

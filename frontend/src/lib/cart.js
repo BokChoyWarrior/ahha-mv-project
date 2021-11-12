@@ -1,19 +1,23 @@
 import axios from './axios';
 
+/**
+ * makes a GET request /carts endpoint for logged in users cart
+ * @param {number} userId
+ * @returns Object containing items in users cart with associated item details
+ */
+
 export const getUsersCart = async (userId) => {
   const response = await axios.get(`/carts/${userId}/cartItems`);
-  // CHECK ERRORS
   return response.data;
 };
 
-// export const addToCart = async (userId, itemId) => {
-//   const getCartItem = await axios.get(`/carts/${userId}/cartItems/items?itemId=${itemId}`);
-//   const data = getCartItem.data;
-//   if (!Object.values(data).length) {
-//     return await axios.post('/cartItems', { id: item.id, quantity: 1, CartId: userId });
-//   }
-// };
-
+/**
+ * Tries to increment a user's cartItem by quantity.
+ * If the resulting quantity is 0 or negative, the item will be removed from the user's cart
+ * @param {number} userId
+ * @param {number} itemId
+ * @param {number} amount
+ */
 export const incrementCartItem = async (userId, itemId, amount = 1) => {
   const response = await axios.post(`/carts/${userId}/cartItems/`, {
     itemId: itemId,
@@ -21,33 +25,13 @@ export const incrementCartItem = async (userId, itemId, amount = 1) => {
   });
   return response;
 };
-export const getCartDetails = async (cartItems) => {
-  const allItemsReq = await axios.get('/items');
-  const items = allItemsReq.data;
-  const cartDetails = items.map((item) => {
-    const match = cartItems.find((cartItem) => cartItem.id === item.id);
-    if (match) {
-      return {
-        ...match,
-        ...item,
-      };
-    }
-  });
-  return cartDetails.filter((item) => item);
-};
 
-export const updateCartItemQuant = async (itemId, quantity) => {
-  await axios.put(`/cartItems/${itemId}`, { quantity: quantity });
-};
+/**
+ * requests deletion of item from cart using userId and the itemId from '/cartItems' endpoint
+ * @param {number} itemId
+ * @param {number} userId
+ */
 
 export const deleteItemFromCart = async (itemId, userId) => {
-  await axios.delete(`/cartItems/${itemId}?cartId=${userId}`);
+  return await axios.delete(`/cartItems/${itemId}?cartId=${userId}`);
 };
-
-/* needs work */
-// export const makeIncQuantReq = async (userId, itemId) => {
-//   const userCartReq = await getUsersCart(userId);
-//   const userCart = userCartReq.data;
-
-//   console.log(userCart);
-// };

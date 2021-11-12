@@ -14,12 +14,15 @@ import {
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import './admin.css';
-// import { useHistory } from 'react-router';
 import axios from '../../lib/axios';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+/**
+ * This component represents the whole admin page at `/admin`
+ *
+ */
+
 export default function Admin() {
-  //   const history = useHistory();
   const [categorySelected, setCategory] = useState(0);
 
   const handleSelect = (e) => {
@@ -28,7 +31,7 @@ export default function Admin() {
 
   const deleteItem = async (id) => {
     await axios.delete(`/items/${id}`);
-    refreshItems();
+    refreshData();
   };
 
   const onSubmitEdit = async (data) => {
@@ -39,7 +42,7 @@ export default function Admin() {
       description: data.description,
       price: data.price,
     });
-    refreshItems();
+    refreshData();
   };
 
   const onSubmitCreate = async (data) => {
@@ -50,29 +53,29 @@ export default function Admin() {
       description: data.description,
       price: data.price,
     });
-    refreshItems();
+    refreshData();
   };
 
   const [items, setItems] = useState({ loading: true, items: [], categories: [] });
 
-  const refreshItems = async () => {
-    const response = await axios.get('/items');
-    const response2 = await axios.get('/categories');
+  /**
+   * Reloads the items and categories and then calls setItems(xyz) for re-render
+   */
+  const refreshData = async () => {
+    const itemsResponse = await axios.get('/items');
+    const categoriesResponse = await axios.get('/categories');
     setItems({
       loading: false,
-      items: response.data,
-      categories: response2.data,
+      items: itemsResponse.data,
+      categories: categoriesResponse.data,
     });
   };
 
   useEffect(() => {
-    refreshItems();
+    refreshData();
   }, []);
 
-  //   const viewCategory = (itemId) => {
-  //     history.push(`/items/${itemId}`);
-  //   };
-
+  // We would like to show a loading spinner while we await the items from the API
   if (items.loading) {
     return <LoadingSpinner />;
   } else {
@@ -106,7 +109,7 @@ export default function Admin() {
                   .map((item) => {
                     const categoryName = items.categories.find((e) => e.id === item.CategoryId).name;
                     return (
-                      <TableData
+                      <Item
                         key={item.id}
                         id={item.id}
                         name={item.name}
@@ -116,14 +119,14 @@ export default function Admin() {
                         price={item.price}
                         deleteItem={deleteItem}
                         onSubmitEdit={onSubmitEdit}
-                      ></TableData>
+                      ></Item>
                     );
                   })}
               {categorySelected === 0 &&
                 items.items.map((item) => {
                   const categoryName = items.categories.find((e) => e.id === item.CategoryId).name;
                   return (
-                    <TableData
+                    <Item
                       key={item.id}
                       id={item.id}
                       name={item.name}
@@ -133,7 +136,7 @@ export default function Admin() {
                       price={item.price}
                       deleteItem={deleteItem}
                       onSubmitEdit={onSubmitEdit}
-                    ></TableData>
+                    ></Item>
                   );
                 })}
             </tbody>
@@ -144,7 +147,7 @@ export default function Admin() {
   }
 }
 
-function TableData({ id, name, category, imageLink, description, price, deleteItem, onSubmitEdit }) {
+function Item({ id, name, category, imageLink, description, price, deleteItem, onSubmitEdit }) {
   return (
     <tr>
       <td>{id}</td>
@@ -183,6 +186,11 @@ function TableData({ id, name, category, imageLink, description, price, deleteIt
   );
 }
 
+/**
+ * A delete item button with a confirmation modal (pop-up)
+ * @returns delete item button
+ */
+
 function DeleteItemButton({ name, id, deleteItem }) {
   const [show, setShow] = useState(false);
 
@@ -216,6 +224,18 @@ function DeleteItemButton({ name, id, deleteItem }) {
     </>
   );
 }
+
+/**
+ * Allows user to edit db stored items via a modal form
+ * @param {string} name item name
+ * @param {number} id item id
+ * @param {string} category item category
+ * @param {string} imageLink image url
+ * @param {string} description item description
+ * @param {number} price item price
+ * @param {function} onSubmitEdit form submission event handler
+ * @returns a modal that contains form that edits item details. Field contain current item details
+ */
 
 function EditItemButton({ name, id, category, imageLink, description, price, onSubmitEdit }) {
   const [show, setShow] = useState(false);
@@ -303,7 +323,6 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
               const imageLink = document.getElementById('editImageLink').value;
               const description = document.getElementById('editDescription').value;
               const price = document.getElementById('editPrice').value;
-              // if (form.getElementsByTagName('p').length === 0) {
               if (name !== '' && imageLink !== '' && description !== '' && price !== '') {
                 handleClose();
               }
@@ -317,6 +336,11 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
   );
 }
 
+/**
+ * A button which allows the user to create a new item via a modal form
+ *
+ * @param {function} onSubmitCreate  form submission event handler function
+ */
 function CreateItemButton({ onSubmitCreate }) {
   const [show, setShow] = useState(false);
   const {
@@ -409,7 +433,6 @@ function CreateItemButton({ onSubmitCreate }) {
               const imageLink = document.getElementById('createImageLink').value;
               const description = document.getElementById('createDescription').value;
               const price = document.getElementById('createPrice').value;
-              // if (form.getElementsByTagName('p').length === 0) {
               if (name !== '' && imageLink !== '' && description !== '' && price !== '') {
                 handleClose();
               }
@@ -422,6 +445,13 @@ function CreateItemButton({ onSubmitCreate }) {
     </>
   );
 }
+
+/**
+ * A button which allows the user to sort by category
+ *
+ * @param {string} categories category label
+ * @param {function} handleSelect event handler for dropdown selection
+ */
 
 function SortByCategoryButton({ categories, handleSelect }) {
   return (
