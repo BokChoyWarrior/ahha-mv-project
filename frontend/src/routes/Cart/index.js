@@ -97,7 +97,7 @@ export default function Cart({ session }) {
 
 function Item({ item, decrementItem, incrementItem, handleRemove, session }) {
   const onRemoveClick = async (itemId) => {
-    await deleteItemFromCart(itemId, session.userId);
+    await deleteItemFromCart(itemId, session.userId, item.quantityInCart);
     handleRemove(item.id);
   };
 

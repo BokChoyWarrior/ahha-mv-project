@@ -32,6 +32,10 @@ export const incrementCartItem = async (userId, itemId, amount = 1) => {
  * @param {number} userId
  */
 
-export const deleteItemFromCart = async (itemId, userId) => {
-  return await axios.delete(`/cartItems/${itemId}?cartId=${userId}`);
+export const deleteItemFromCart = async (itemId, userId, quantity) => {
+  const response = await axios.post(`/carts/${userId}/cartItems/`, {
+    itemId: itemId,
+    amountToAdd: -quantity,
+  });
+  return response;
 };
