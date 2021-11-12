@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Card, Row, Button, Container, Image } from 'react-bootstrap';
+import { Col, Row, Button, Container, Image } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
 import { incrementCartItem, getUsersCart } from '../../lib/cart';
 import axios from '../../lib/axios';
