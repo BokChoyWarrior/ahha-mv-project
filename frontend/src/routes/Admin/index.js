@@ -18,7 +18,12 @@ import './admin.css';
 import axios from '../../lib/axios';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+/**
+ * Admin Page Component
+ */
+
 export default function Admin() {
+  // comment
   //   const history = useHistory();
   const [categorySelected, setCategory] = useState(0);
 
@@ -148,6 +153,10 @@ export default function Admin() {
   }
 }
 
+/**
+ * @returns table row
+ */
+
 function TableData({ id, name, category, imageLink, description, price, deleteItem, onSubmitEdit }) {
   return (
     <tr>
@@ -187,6 +196,10 @@ function TableData({ id, name, category, imageLink, description, price, deleteIt
   );
 }
 
+/**
+ * @returns delete item button
+ */
+
 function DeleteItemButton({ name, id, deleteItem }) {
   const [show, setShow] = useState(false);
 
@@ -220,6 +233,18 @@ function DeleteItemButton({ name, id, deleteItem }) {
     </>
   );
 }
+
+/**
+ *
+ * @param {name} param0 item name
+ * @param {id} param1 item id
+ * @param {category} param2 item category
+ * @param {imageLink} param3 image url for item
+ * @param {description} param4 item description
+ * @param {price} param5 item price
+ * @param {onSubmitEdit} param6 form submission event handler function
+ * @returns a modal that contains form that edits item details. Field contain current item details
+ */
 
 function EditItemButton({ name, id, category, imageLink, description, price, onSubmitEdit }) {
   const [show, setShow] = useState(false);
@@ -320,6 +345,12 @@ function EditItemButton({ name, id, category, imageLink, description, price, onS
     </>
   );
 }
+
+/**
+ *
+ * @param {onSubmitCreate} param0  form submission event handler function
+ * @returns a modal with a form for creating a item for a category
+ */
 
 function CreateItemButton({ onSubmitCreate }) {
   const [show, setShow] = useState(false);
@@ -426,6 +457,13 @@ function CreateItemButton({ onSubmitCreate }) {
     </>
   );
 }
+
+/**
+ *
+ * @param {caregories} param0 array of category objects
+ *  @param {handleSelect} param1 event handler for dropdown selection
+ * @returns dropdown button element with list of categories
+ */
 
 function SortByCategoryButton({ categories, handleSelect }) {
   return (

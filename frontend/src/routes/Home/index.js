@@ -4,6 +4,11 @@ import { useHistory } from 'react-router';
 import './home.css';
 import axios from '../../lib/axios';
 
+/**
+ * Home page component
+ * @returns list of navigable categories
+ */
+
 export default function Home() {
   const history = useHistory();
   const [categories, setCategories] = useState({ loading: true, categories: [] });
@@ -65,6 +70,12 @@ export default function Home() {
     );
   }
 }
+
+/**
+ *
+ * @param {object} props props from parent component
+ * @returns bootstrap card containing category details with link to particular category page
+ */
 
 function CategoryCard({ imageLink, name, view }) {
   return (

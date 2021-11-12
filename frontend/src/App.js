@@ -13,7 +13,7 @@ function App() {
   const [session, setSession] = useState({ loggedIn: false, userId: 0 });
 
   /**
-   * In case of refresh, persists users login session and their cart
+   * In case of refresh, persists users login session
    */
 
   const loginLocalToApp = async () => {
@@ -52,6 +52,11 @@ function App() {
     clearLocalUser();
   };
 
+  /**
+   * callback arguments body runs on intitial component render
+   * checks localStorage for user session
+   */
+
   useEffect(async () => {
     await loginLocalToApp();
   }, []);
@@ -78,31 +83,37 @@ function App() {
         {loading ? (
           <LoadingSpinner />
         ) : (
+          // switch component makes sure only one of the routes is matched
           <Switch>
+            {/* Home Page */}
             <Route exact path="/">
               <Home />
             </Route>
+            {/* Categories Page - List of items in specific category */}
             <Route exact path="/categories/:id">
               <Category session={session} />
             </Route>
+            {/* Home Page */}
             <Route exact path="/categories">
               <Home />
             </Route>
-            {/* <Route path="/carts">
-            <Cart />
-          </Route> */}
+            {/* Admin Page */}
             <Route path="/admin">
               <Admin />
             </Route>
+            {/* Login Page for application/website */}
             <Route path="/login">
               <Login loginToApp={loginToApp} />
             </Route>
+            {/* Sign up page for application/website */}
             <Route path="/signup">
               <Signup loginToApp={loginToApp} />
             </Route>
+            {/* Page for Users Cart - Table that lists items in users cart */}
             <Route path="/mycart">
               <Cart session={session} />
             </Route>
+            {/* Renders NoMatch Component for any route that doesn't match any of the above routes */}
             <Route path="*">
               <NoMatch />
             </Route>
@@ -113,6 +124,10 @@ function App() {
   );
 }
 
+/**
+ * If user is logged in, displays their user id. If not shows is not logged in center of nav bar
+ */
+
 function WelcomeMessage({ userId }) {
   if (userId) {
     return <Navbar.Text>{`User: ${userId}`}</Navbar.Text>;
@@ -120,6 +135,11 @@ function WelcomeMessage({ userId }) {
     return <Navbar.Text>{`Not logged in`}</Navbar.Text>;
   }
 }
+
+/**
+ * If logged in, displays buttons MyCart and Logout.
+ * else displays buttons Login and SignUp
+ */
 
 function UserOptions({ session, children }) {
   if (session.loggedIn === true) {
@@ -145,6 +165,11 @@ function UserOptions({ session, children }) {
     );
   }
 }
+
+/**
+ * gets location object from useLocation hook
+ * @returns
+ */
 
 function NoMatch() {
   let location = useLocation();

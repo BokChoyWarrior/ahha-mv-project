@@ -5,6 +5,11 @@ import { getUsersCart, deleteItemFromCart, incrementCartItem } from '../../lib/c
 import './Cart.css';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+/**
+ * Cart Page Component + Logic
+ * Displays table
+ */
+
 export default function Cart({ session }) {
   const history = useHistory();
   if (!session.loggedIn) {
@@ -85,6 +90,10 @@ export default function Cart({ session }) {
     </Container>
   );
 }
+
+/**
+ * Cart item Component - each is a row in a table
+ */
 
 function TableRow({ item, decrementItem, incrementItem, handleRemove, session }) {
   const onRemoveClick = async (itemId) => {

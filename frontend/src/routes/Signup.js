@@ -21,6 +21,7 @@ export function Signup({ loginToApp }) {
    * triggers modal to open which will display the users assigned cartId/userId
    */
 
+  // creates cart/user -> saves in local storage -> displays modal with user/cart id for logging in
   const handleSubmit = async (event) => {
     event.preventDefault();
     const cart = await axios.post('/carts');
