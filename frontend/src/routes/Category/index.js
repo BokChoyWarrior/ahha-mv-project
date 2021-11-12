@@ -120,7 +120,6 @@ export default function Category({ session }) {
     return (
       <Container className="my-4">
         <h2 className="display-3 my-2">{categoryName}</h2>
-        {/* <Row xs={1} md={4} className="g-4 pt-3 justify-content-center"> */}
         {/* map over the items data pass it into item card */}
         {items.map((item) => {
           return (
@@ -130,49 +129,16 @@ export default function Category({ session }) {
                 item={item}
                 incrementItem={() => handleChangeItemQuantity(item.id, 1)}
                 decrementItem={() => handleChangeItemQuantity(item.id, -1)}
-                // className="my-4"
               ></ItemRow>
               <hr></hr>
             </>
           );
         })}
-        {/* </Row> */}
       </Container>
     );
   }
 }
 
-function ItemCard({ incrementItem, decrementItem, item }) {
-  return (
-    <Col>
-      <Card style={{ width: '18rem', height: '30rem' }}>
-        <Card.Img fluid variant="top" src={item.imageLink} />
-        <Card.Body className="d-flex flex-column justify-content-between">
-          <hr />
-          <Card.Title>{item.name}</Card.Title>
-          <hr />
-          <Card.Text as={'p'} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-            {item.description}
-          </Card.Text>
-          <Card.Text>£{item.price}</Card.Text>
-        </Card.Body>
-        <Card.Footer as={Row} px={3} py={'auto'}>
-          <Col>
-            <Button disabled={!item.quantityInCart} onClick={() => decrementItem(item.id)} variant="danger">
-              -
-            </Button>
-          </Col>
-          <Col>{item.quantityInCart}</Col>
-          <Col>
-            <Button onClick={() => incrementItem(item.id)} variant="primary">
-              +
-            </Button>
-          </Col>
-        </Card.Footer>
-      </Card>
-    </Col>
-  );
-}
 function ItemRow({ incrementItem, decrementItem, item }) {
   return (
     <Row>
@@ -207,18 +173,5 @@ function ItemRow({ incrementItem, decrementItem, item }) {
         </Row>
       </Col>
     </Row>
-    // <Card style={{ width: '18rem', height: '30rem' }}>
-    //   <Card.Body className="d-flex flex-column justify-content-between">
-    //     <hr />
-    //     <Card.Title>{item.name}</Card.Title>
-    //     <hr />
-    //     <Card.Text as={'p'} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-    //       {item.description}
-    //     </Card.Text>
-    //     <Card.Text>£{item.price}</Card.Text>
-    //   </Card.Body>
-    //   <Card.Footer as={Row} px={3} py={'auto'}>
-    //   </Card.Footer>
-    // </Card>
   );
 }
