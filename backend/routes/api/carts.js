@@ -88,6 +88,15 @@ async function removeItemFromCart(item) {
   return await item.CartItem.destroy();
 }
 
+/**
+ * This route will attempt to add or remove an amount (specified in req.body) to a user's given cart item.
+ *
+ * If the resulting quantity is 0 or negative, the item will simply be removed from the cart.
+ *
+ * Resulting quantity is always returned, clamped to 0 and above.
+ *
+ *
+ */
 router.post('/:cartId/cartItems', async (req, res) => {
   const { itemId, amountToAdd } = req.body;
 
@@ -118,9 +127,7 @@ router.post('/:cartId/cartItems', async (req, res) => {
     await cart.addItem(item, { through: { quantity: quantity } });
   } else {
   }
-  // const itemToAdd = await Item.findByPk(itemId);
 
-  console.log(quantity);
   res.status(200).json(quantity);
 });
 

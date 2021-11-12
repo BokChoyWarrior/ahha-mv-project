@@ -6,8 +6,8 @@ import './Cart.css';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 /**
- * Cart Page Component + Logic
- * Displays table
+ * Represents the entire Cart page at `/mycart`
+ * Includes a table of items in cart as well as increment, decrement, and remove functionality
  */
 
 export default function Cart({ session }) {
@@ -75,14 +75,14 @@ export default function Cart({ session }) {
         <tbody>
           {cart.map((item) => {
             return (
-              <TableRow
+              <Item
                 key={item.id}
                 item={item}
                 incrementItem={() => handleChangeItemQuantity(item.id, 1)}
                 decrementItem={() => handleChangeItemQuantity(item.id, -1)}
                 handleRemove={handleRemove}
                 session={session}
-              ></TableRow>
+              ></Item>
             );
           })}
         </tbody>
@@ -95,7 +95,7 @@ export default function Cart({ session }) {
  * Cart item Component - each is a row in a table
  */
 
-function TableRow({ item, decrementItem, incrementItem, handleRemove, session }) {
+function Item({ item, decrementItem, incrementItem, handleRemove, session }) {
   const onRemoveClick = async (itemId) => {
     await deleteItemFromCart(itemId, session.userId);
     handleRemove(item.id);

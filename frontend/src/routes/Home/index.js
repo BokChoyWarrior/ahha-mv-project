@@ -3,6 +3,7 @@ import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import './home.css';
 import axios from '../../lib/axios';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 /**
  * Home page component
@@ -28,17 +29,9 @@ export default function Home() {
     });
   };
 
-  /**
-   * runs callback body on component render
-   */
-
   useEffect(() => {
     refreshCategories();
   }, []);
-
-  /**
-   * redirect
-   */
 
   const viewCategory = (categoryId) => {
     history.push(`/categories/${categoryId}`);
@@ -49,7 +42,7 @@ export default function Home() {
    */
 
   if (categories.loading) {
-    return <h1>Loading...</h1>;
+    return <LoadingSpinner />;
   } else {
     return (
       <Container fluid="md">
@@ -72,9 +65,7 @@ export default function Home() {
 }
 
 /**
- *
- * @param {object} props props from parent component
- * @returns bootstrap card containing category details with link to particular category page
+ * A bootstrap card containing category details with link to particular category page
  */
 
 function CategoryCard({ imageLink, name, view }) {

@@ -26,8 +26,8 @@ function App() {
 
   /**
    *
-   * @param {*} userId - unique identifier (number) assigned to user
-   * @returns true if identifier exists in db; otherwise returns false
+   * @param {number | string} userId - unique identifier (number) assigned to user
+   * @returns {boolean}
    */
 
   const loginToApp = async (userId) => {
@@ -83,18 +83,16 @@ function App() {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          // switch component makes sure only one of the routes is matched
+          // We use a switch statement from react-router to simulate actual browser history
+          // and so that the back button will work predictably.
           <Switch>
             {/* Home Page */}
-            <Route exact path="/">
-              <Home />
-            </Route>
             {/* Categories Page - List of items in specific category */}
-            <Route exact path="/categories/:id">
+            {/* Home Page */}
+            <Route path="/categories/:id">
               <Category session={session} />
             </Route>
-            {/* Home Page */}
-            <Route exact path="/categories">
+            <Route path="/categories">
               <Home />
             </Route>
             {/* Admin Page */}
@@ -114,6 +112,9 @@ function App() {
               <Cart session={session} />
             </Route>
             {/* Renders NoMatch Component for any route that doesn't match any of the above routes */}
+            <Route exact path="/">
+              <Home />
+            </Route>
             <Route path="*">
               <NoMatch />
             </Route>
@@ -142,7 +143,7 @@ function WelcomeMessage({ userId }) {
  */
 
 function UserOptions({ session, children }) {
-  if (session.loggedIn === true) {
+  if (session.loggedIn) {
     return (
       <>
         <LinkContainer to="/mycart" className="mx-2">
@@ -168,7 +169,6 @@ function UserOptions({ session, children }) {
 
 /**
  * gets location object from useLocation hook
- * @returns
  */
 
 function NoMatch() {

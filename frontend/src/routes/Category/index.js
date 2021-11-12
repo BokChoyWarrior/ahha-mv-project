@@ -6,12 +6,10 @@ import axios from '../../lib/axios';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 /**
- * Category page component + logic
+ * List of items in a category that can be added to cart- quantity can be increased/decreased
  */
 
 export default function Category({ session }) {
-  // defined initial useState
-  // useState return a variable, and setter or function that changes the variable
   const [items, setItems] = useState([]);
   const [itemsLoading, setItemsLoading] = useState(true);
 
@@ -22,7 +20,7 @@ export default function Category({ session }) {
 
   /**
    * makes GET request to /categories endpoint. Uses route category id parameter to request specific category items
-   * @returns items array
+   * @returns array of items objects
    */
 
   const getItems = async () => {
@@ -54,8 +52,6 @@ export default function Category({ session }) {
   };
 
   /**
-   * adds property to quantityInCart with initial value zero to tempItems (not mutated) and assigns result to initialisedItems
-   * iterates over, initialisedItems, checks if each item exists in cart, if it does assigns cart item quantity to added key
    *
    * adds property to item object for simpler retrieval and manipulation of quantity
    * value is zero or set to quantity for item in cart for user session
@@ -85,10 +81,11 @@ export default function Category({ session }) {
     await refreshItems();
   }, []);
 
-  // if [user logged in] adds and increments or decremeants and removes item from users cart
-  // order: request change through API -> change made through server to db -> response quantity
-  // used to update client state and display new quantity
-  // else triggers redirect to login page
+  /**
+   * Attempts to change item quantity in user's cart.
+   * Will redirect to login if there is no session logged in.
+   * We would lke to update the quantity seen by the user, when they request the change
+   */
   const handleChangeItemQuantity = async (itemId, quantity) => {
     if (!session.loggedIn) {
       history.push('/login');
@@ -99,7 +96,11 @@ export default function Category({ session }) {
     updateItemQuantity(itemId, newQuantityResponse.data);
   };
 
-  // finds item in state -> updates quantity (non-mutative) -> sets new state -> triggers rerender and udpates component
+  /**
+   * Updates quantity of for displaying on client
+   * @param {number} itemId
+   * @param {number} quantity
+   */
   const updateItemQuantity = (itemId, quantity) => {
     const newItems = items.map((item) => {
       if (item.id === itemId) {
@@ -136,10 +137,6 @@ export default function Category({ session }) {
     );
   }
 }
-
-/**
- * Category item - wrapped in boostrap card
- */
 
 function ItemCard({ incrementItem, decrementItem, item }) {
   return (
