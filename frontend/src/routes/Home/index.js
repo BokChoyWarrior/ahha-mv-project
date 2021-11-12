@@ -46,7 +46,7 @@ export default function Home() {
   } else {
     return (
       <Container fluid="md">
-        <Row xs={1} md={2} lg={3} xl={4}>
+        <Row xs={1} md={2} lg={3} xxl={4} className="mx-lg-3">
           {categories.categories.map((category) => {
             return (
               <Col key={category.id} className="mx-auto my-2 hover-pointer">

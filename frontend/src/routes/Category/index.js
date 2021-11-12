@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Card, Row, Button, Container } from 'react-bootstrap';
+import { Col, Card, Row, Button, Container, Image } from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
 import { incrementCartItem, getUsersCart } from '../../lib/cart';
 import axios from '../../lib/axios';
@@ -118,21 +118,25 @@ export default function Category({ session }) {
     return <LoadingSpinner />;
   } else {
     return (
-      <Container className="my-4 pb-3">
+      <Container className="my-4">
         <h2 className="display-3 my-2">{categoryName}</h2>
-        <Row xs={1} md={4} className="g-4 pt-3 justify-content-center">
-          {/* map over the items data pass it into item card */}
-          {items.map((item) => {
-            return (
-              <ItemCard
+        {/* <Row xs={1} md={4} className="g-4 pt-3 justify-content-center"> */}
+        {/* map over the items data pass it into item card */}
+        {items.map((item) => {
+          return (
+            <>
+              <ItemRow
                 key={item.id}
                 item={item}
                 incrementItem={() => handleChangeItemQuantity(item.id, 1)}
                 decrementItem={() => handleChangeItemQuantity(item.id, -1)}
-              ></ItemCard>
-            );
-          })}
-        </Row>
+                // className="my-4"
+              ></ItemRow>
+              <hr></hr>
+            </>
+          );
+        })}
+        {/* </Row> */}
       </Container>
     );
   }
@@ -140,29 +144,81 @@ export default function Category({ session }) {
 
 function ItemCard({ incrementItem, decrementItem, item }) {
   return (
-    <Col className="align-self-strech">
-      <Card className="h-100">
-        <Card.Img
-          variant="top"
-          style={{ width: '100%', height: '100%', maxHeight: '300px' }}
-          className=" img-thumbnail ratio ratio-4x3"
-          src={item.imageLink}
-        />
+    <Col>
+      <Card style={{ width: '18rem', height: '30rem' }}>
+        <Card.Img fluid variant="top" src={item.imageLink} />
         <Card.Body className="d-flex flex-column justify-content-between">
           <hr />
           <Card.Title>{item.name}</Card.Title>
           <hr />
-          <Card.Text className="text-start">{item.description}</Card.Text>
+          <Card.Text as={'p'} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+            {item.description}
+          </Card.Text>
           <Card.Text>£{item.price}</Card.Text>
-          <Button disabled={!item.quantityInCart} onClick={() => decrementItem(item.id)} variant="danger">
-            -
-          </Button>
-          {item.quantityInCart}
-          <Button onClick={() => incrementItem(item.id)} variant="primary">
-            +
-          </Button>
         </Card.Body>
+        <Card.Footer as={Row} px={3} py={'auto'}>
+          <Col>
+            <Button disabled={!item.quantityInCart} onClick={() => decrementItem(item.id)} variant="danger">
+              -
+            </Button>
+          </Col>
+          <Col>{item.quantityInCart}</Col>
+          <Col>
+            <Button onClick={() => incrementItem(item.id)} variant="primary">
+              +
+            </Button>
+          </Col>
+        </Card.Footer>
       </Card>
     </Col>
+  );
+}
+function ItemRow({ incrementItem, decrementItem, item }) {
+  return (
+    <Row>
+      <Col className="m-auto" xs="3">
+        <Image style={{ maxWidth: '6rem', maxHeight: '30rem' }} src={item.imageLink} />
+      </Col>
+      {/* name and desc */}
+      <Col className="m-auto">
+        <Row className="m-auto" style={{ textAlign: 'center' }}>
+          <h3>{item.name}</h3>
+        </Row>
+        <Row style={{ textAlign: 'center' }}>
+          <hr />
+          <p style={{ textOverflow: 'ellipsis', maxLines: '5' }}>{item.description}</p>
+        </Row>
+      </Col>
+      <Col className="m-auto" xs="1" lg="2">
+        <Row className="my-0">
+          <Col>
+            <Button disabled={!item.quantityInCart} onClick={() => decrementItem(item.id)} variant="danger">
+              -
+            </Button>
+          </Col>
+          <Col>
+            <h2>{item.quantityInCart}</h2>
+          </Col>
+          <Col>
+            <Button onClick={() => incrementItem(item.id)} variant="primary">
+              +
+            </Button>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+    // <Card style={{ width: '18rem', height: '30rem' }}>
+    //   <Card.Body className="d-flex flex-column justify-content-between">
+    //     <hr />
+    //     <Card.Title>{item.name}</Card.Title>
+    //     <hr />
+    //     <Card.Text as={'p'} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+    //       {item.description}
+    //     </Card.Text>
+    //     <Card.Text>£{item.price}</Card.Text>
+    //   </Card.Body>
+    //   <Card.Footer as={Row} px={3} py={'auto'}>
+    //   </Card.Footer>
+    // </Card>
   );
 }
