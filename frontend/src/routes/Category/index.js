@@ -5,9 +5,11 @@ import { incrementCartItem, getUsersCart } from '../../lib/cart';
 import axios from '../../lib/axios';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+/**
+ * List of items in a category that can be added to cart- quantity can be increased/decreased
+ */
+
 export default function Category({ session }) {
-  // defined initial useState
-  // useState return a variable, and setter or function that changes the variable
   const [items, setItems] = useState([]);
   const [itemsLoading, setItemsLoading] = useState(true);
 
@@ -16,12 +18,23 @@ export default function Category({ session }) {
   const { id } = useParams();
   const history = useHistory();
 
+  /**
+   * makes GET request to /categories endpoint. Uses route category id parameter to request specific category items
+   * @returns array of items objects
+   */
+
   const getItems = async () => {
     const response = await axios.get(`/categories/${id}?getNested=true`);
 
     categoryName = response.data.name;
     return response.data.Items;
   };
+
+  /**
+   * checks is a user session is present
+   * sets isLoading state component to true while users cart information request completes.
+   * adds property to cart
+   */
 
   const refreshItems = async () => {
     setItemsLoading(true);
@@ -37,6 +50,12 @@ export default function Category({ session }) {
     setItems(quantifiedItems);
     setItemsLoading(false);
   };
+
+  /**
+   *
+   * adds property to item object for simpler retrieval and manipulation of quantity
+   * value is zero or set to quantity for item in cart for user session
+   */
 
   const addQuantityProperty = (tempItems, tempCart) => {
     console.log(tempItems, tempCart);
@@ -62,6 +81,11 @@ export default function Category({ session }) {
     await refreshItems();
   }, []);
 
+  /**
+   * Attempts to change item quantity in user's cart.
+   * Will redirect to login if there is no session logged in.
+   * We would lke to update the quantity seen by the user, when they request the change
+   */
   const handleChangeItemQuantity = async (itemId, quantity) => {
     if (!session.loggedIn) {
       history.push('/login');
@@ -72,6 +96,11 @@ export default function Category({ session }) {
     updateItemQuantity(itemId, newQuantityResponse.data);
   };
 
+  /**
+   * Updates quantity of for displaying on client
+   * @param {number} itemId
+   * @param {number} quantity
+   */
   const updateItemQuantity = (itemId, quantity) => {
     const newItems = items.map((item) => {
       if (item.id === itemId) {
@@ -88,7 +117,6 @@ export default function Category({ session }) {
   if (itemsLoading) {
     return <LoadingSpinner />;
   } else {
-    // return list of items in inside of JSX (html) for showing on the browser
     return (
       <Container className="my-4 pb-3">
         <h2 className="display-3 my-2">{categoryName}</h2>

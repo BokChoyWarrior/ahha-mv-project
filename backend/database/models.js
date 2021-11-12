@@ -5,6 +5,11 @@ const sequelize = new Sequelize({
   storage: './database/db.sqlite',
 });
 
+/**
+ * Categories Model
+ * Makes a table for Category data
+ */
+
 const categoriesModel = {
   name: {
     type: DataTypes.STRING,
@@ -23,7 +28,19 @@ const categoriesModel = {
   },
 };
 
+/**
+ * Cart model
+ * Makes a table for cart data
+ * contains only cart id primary key
+ * users are carts and user ids are cart ids
+ */
+
 const cartModel = {};
+
+/**
+ * Cart Item model
+ * makes a table for items that are in a cart
+ */
 
 const cartItemsModel = {
   quantity: {
@@ -33,6 +50,12 @@ const cartItemsModel = {
     },
   },
 };
+
+/**
+ * items model
+ * makes a table for items
+ * with columns for model keys
+ */
 
 const itemsModel = {
   name: {

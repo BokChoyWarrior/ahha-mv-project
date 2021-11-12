@@ -3,10 +3,21 @@ import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import './home.css';
 import axios from '../../lib/axios';
+import LoadingSpinner from '../../components/LoadingSpinner';
+
+/**
+ * Home page component
+ * @returns list of navigable categories
+ */
 
 export default function Home() {
   const history = useHistory();
   const [categories, setCategories] = useState({ loading: true, categories: [] });
+
+  /**
+   * fetches existant item categories information form categories Endpoint
+   * updates component state with response body and sets loading property to false
+   */
 
   const refreshCategories = async () => {
     // const response = await axios.get('/products/categories');
@@ -26,8 +37,12 @@ export default function Home() {
     history.push(`/categories/${categoryId}`);
   };
 
+  /**
+   * renders loading, while api request ongoing; otherwise renders category list
+   */
+
   if (categories.loading) {
-    return <h1>Loading...</h1>;
+    return <LoadingSpinner />;
   } else {
     return (
       <Container fluid="md">
@@ -48,6 +63,10 @@ export default function Home() {
     );
   }
 }
+
+/**
+ * A bootstrap card containing category details with link to particular category page
+ */
 
 function CategoryCard({ imageLink, name, view }) {
   return (

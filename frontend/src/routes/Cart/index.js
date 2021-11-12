@@ -5,6 +5,11 @@ import { getUsersCart, deleteItemFromCart, incrementCartItem } from '../../lib/c
 import './Cart.css';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+/**
+ * Represents the entire Cart page at `/mycart`
+ * Includes a table of items in cart as well as increment, decrement, and remove functionality
+ */
+
 export default function Cart({ session }) {
   const history = useHistory();
   if (!session.loggedIn) {
@@ -70,14 +75,14 @@ export default function Cart({ session }) {
         <tbody>
           {cart.map((item) => {
             return (
-              <TableRow
+              <Item
                 key={item.id}
                 item={item}
                 incrementItem={() => handleChangeItemQuantity(item.id, 1)}
                 decrementItem={() => handleChangeItemQuantity(item.id, -1)}
                 handleRemove={handleRemove}
                 session={session}
-              ></TableRow>
+              ></Item>
             );
           })}
         </tbody>
@@ -86,7 +91,11 @@ export default function Cart({ session }) {
   );
 }
 
-function TableRow({ item, decrementItem, incrementItem, handleRemove, session }) {
+/**
+ * Cart item Component - each is a row in a table
+ */
+
+function Item({ item, decrementItem, incrementItem, handleRemove, session }) {
   const onRemoveClick = async (itemId) => {
     await deleteItemFromCart(itemId, session.userId);
     handleRemove(item.id);
