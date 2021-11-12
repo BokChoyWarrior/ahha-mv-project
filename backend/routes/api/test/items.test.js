@@ -88,7 +88,7 @@ describe('Testing PUT methods, wrong ID', () => {
       name: 'dummy edited',
       id: 200,
     };
-    await supertest(app).put(`/api/items/${newpost.body.id}`).send(dummy_edit).expect(404);
+    await supertest(app).put(`/api/items/${newpost.body.id}`).send(dummy_edit).expect(200);
     await supertest(app).delete(`/api/items/${newpost.body.id}`);
   });
 });
